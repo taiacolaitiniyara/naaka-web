@@ -1,13 +1,180 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'UniNeue';
+  src: url('./layout/fonts/UniNeueBold.otf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'UniNeue';
+  src: url('./layout/fonts/UniNeueRegular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'UniNeue';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 0.9rem;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button {
+  font-family: 'UniNeue';
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-style: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background-color: #444;
+  color: #fff;
+}
+
+button:hover {
+  opacity: 0.75;
+}
+
+button:active {
+  opacity: 1;
+}
+
+input {
+  font-family: 'UniNeue';
+  padding: 5px 10px;
+  border-style: none;
+  background-color: #eee;
+  border-radius: 2.5px;
+  font-size: 0.9rem;
+}
+
+input:hover {
+  background-color: white;
+  outline: 2px solid #84cc01;
+}
+
+input:focus {
+  outline: 2px solid #84cc01;
+  background-color: #fff;
+}
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transform: scale(1.25);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+select {
+  font-family: 'UniNeue';
+  border-style: none;
+  background-color: #eee;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 2.5px;
+}
+
+select:hover {
+  background-color: #fff;
+  outline: 2px solid #84cc01;
+}
+
+select:focus {
+  outline: 2px solid #84cc01;
+  background-color: #fff;
+}
+
+textarea {
+  font-family: 'UniNeue';
+  background-color: #eee;
+  border-radius: 2.5px;
+  font-size: 0.9rem;
+}
+
+textarea:hover {
+  outline: 2px solid #84cc01;
+  background-color: #fff;
+}
+textarea:focus {
+  outline: 2px solid #84cc01;
+  background-color: #fff;
+}
+
+.green-btn {
+  background-color: #84cc01;
+  color: white;
+}
+
+.green-btn:hover {
+  background-color: #679e00;
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  background-color: #444;
+  color: #fff;
+  text-align: left;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.click-list-item {
+  background-color: #eee;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  border: 1px solid #ddd;
+}
+
+.click-list-item:hover {
+  padding-left: 12.5px;
+}
+
+.table-row-hover:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.selected-table-row {
+  background-color: #e4ffcf;
+}
+
+.edit-pen {
+  padding: 5px;
+  border-radius: 2.5px;
+}
+
+.edit-pen:hover {
+  background-color: #bbb;
+}
+
