@@ -15,15 +15,17 @@ import Connections from "./routes/connections/Connections";
 import ManagedLists from "./routes/settings/managed-lists.js/ManagedLists";
 import TariffManagement from "./routes/settings/tariff-management/TariffManagement";
 import TenanantManagement from "./routes/setup/TenantManagement/TenanantManagement";
+import PermissionsManagement from "./routes/setup/PermissionsManagement/PermissionsManagement";
 
 function App() {
+  //console.log(JSON.parse(localStorage.getItem("userInfo")));
   return (
     <div className="App">
       <Online>
         <Router>
           <Routes>
             <Route path="/" element={<Welcome />} />
-            <Route path="login" element={<Login />} />
+            <Route path="user-login" element={<Login />} />
             <Route path="billing" element={<Billing />} />
             <Route path="changes" element={<Changes />} />
             <Route path="customers" element={<Customers />} />
@@ -38,8 +40,12 @@ function App() {
               element={<TariffManagement />}
             />
             <Route
-              path="/setup/tenantmanagement"
+              path="setup/tenantmanagement"
               element={<TenanantManagement />}
+            />
+            <Route
+              path="setup/permissions"
+              element={<PermissionsManagement />}
             />
           </Routes>
         </Router>

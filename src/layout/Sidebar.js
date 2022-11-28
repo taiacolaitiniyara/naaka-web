@@ -37,7 +37,7 @@ function Sidebar() {
               JSON.stringify({ TenantName: "Tenant", TenantId: 1 })
             );
 
-            window.location.href = "/login";
+            window.location.href = "/user-login";
           }}
           className="nav-title link"
         >

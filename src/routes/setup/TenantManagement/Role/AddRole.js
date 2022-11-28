@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
+import {
+  PopupForm,
+  SpaceHorizontal,
+  SpaceVertical,
+} from "../../../../reusables/Elements";
 import {
   NumberInput,
   SelectColor,
@@ -8,64 +12,54 @@ import {
 } from "../../../../reusables/Inputs";
 import { apiGet, apiPost } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
+import { AuthToken } from "../../../../reusables/Constants";
 
-function AddRole({ trigger, tenantId }) {
-  const [hubs, setHubs] = useState([]);
-  useEffect(() => {
-    apiGet(apiRoutes.hubs + tenantId, setHubs);
-  }, []);
-  const [name, setName] = useState();
-  const [isParent, setIsParent] = useState(false);
-  const [hubColor, setHubColor] = useState();
-  const [hubLevel, setHubLevel] = useState();
-  const [parentHubId, setParentHubId] = useState();
+function AddRole({ trigger, hubId }) {
+  const [roleName, setName] = useState();
+  const [isHubAdmin, setIsHubAdmin] = useState(false);
+  const [associatedHubId, setAssociatedHubId] = useState();
 
   function onSubmit() {
-    console.log("Submit");
-    apiPost(apiRoutes.tenants, {
-      Id: 0,
-      RoleId: 0,
-      Name: name,
-      IsParent: true,
-      Created: "2022-11-24T01:40:23.247Z",
-      HubColor: hubColor,
-      Fullname: name,
-      IsActive: true,
-      TextColor: "#fff",
-      HubLevel: hubLevel,
-      ParentHubId: parentHubId,
-      OrderBy: parentHubId,
-    });
+    fetch(
+      `${apiRoutes.baseUrl}/api/v1/UsersAndRoles/createRoleForHub?Name=${roleName}&HubId=${hubId}&IsHubAdmin=${isHubAdmin}&AssociatedHubId=${hubId}`,
+      {
+        method: "POST",
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: AuthToken,
+        },
+      }
+    )
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .catch((e) => console.log(e));
   }
+
   return (
     <PopupForm
       width={400}
       trigger={trigger}
-      heading={"Add Hub to Role"}
+      heading={"Add Role to Hub ID = " + hubId}
       onSubmit={onSubmit}
       submitBtnText={"Save"}
     >
       <TextInput placeholder={"Name"} onChange={setName} required={true} />
       <SpaceHorizontal height={10} />
-      <NumberInput
-        required={true}
-        onChange={setHubLevel}
-        placeholder={"Hub Level"}
-      />
-      <SpaceHorizontal height={10} />
-      <div style={{ display: hubLevel > 1 ? "block" : "none" }}>
-        <SelectInput
-          list={hubs}
-          listName={"Hub Parent"}
-          optionName={"Name"}
-          optionValue={"Id"}
-          setValue={setParentHubId}
-          dataType={"int"}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <input
+          id="isHubAdmin"
+          type={"checkbox"}
+          style={{ width: "fit-content" }}
+          onChange={(v) => {
+            v.target.checked === true
+              ? setIsHubAdmin(true)
+              : setIsHubAdmin(false);
+          }}
         />
-
-        <SpaceHorizontal height={10} />
+        <SpaceVertical width={10} />
+        <label htmlFor={"isHubAdmin"}>Is Hub Admin</label>
       </div>
-      <SelectColor set={setHubColor} />
     </PopupForm>
   );
 }

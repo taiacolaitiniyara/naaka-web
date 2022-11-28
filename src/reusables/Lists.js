@@ -1,3 +1,6 @@
+import { apiRoutes } from "../api-services/ApiRoutes";
+import { useFetchApiList } from "./CustomHooks";
+
 export const sidebarList = [
   { name: "Home", to: "/home", icon: "house", id: "home-tab" },
   {
@@ -68,6 +71,10 @@ export const setupList = [
     to: "/setup/users",
     name: "User Management",
   },
+  {
+    to: "/setup/permissions",
+    name: "Permissions Management"
+  }
 ];
 
 export const TenantTypeList = [
@@ -75,3 +82,11 @@ export const TenantTypeList = [
   { Id: 2, Name: "Utility" },
   { Id: 3, Name: "Vendor" },
 ];
+
+export const HubRolesList = (hubId, tenantId) => {
+  const list = useFetchApiList(
+    `/api/v1/UsersAndRoles/getRolesBelongToHub?HubId=${hubId}&TenantId=${tenantId}`
+  );
+
+  return list;
+};

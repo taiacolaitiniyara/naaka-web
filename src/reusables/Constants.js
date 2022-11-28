@@ -2,6 +2,11 @@ export const UserName = "Sumeet";
 
 export const TenantId = 1;
 
-export const AuthToken = `Bearer ${
-  JSON.parse(localStorage.getItem("userInfo")).accessToken
-}`;
+export const AuthToken = () => {
+  const userInfo = localStorage.getItem("userInfo");
+  if (userInfo !== null) {
+    return "Bearer " + JSON.parse(userInfo).accessToken;
+  } else {
+    return "token";
+  }
+};

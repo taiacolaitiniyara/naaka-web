@@ -18,14 +18,10 @@ function Role({ addBtnText, setRoleId, tenantId, hubId }) {
         onClick={() => setShowAddForm(!showAddForm)}
       />
       {showEditForm && (
-        <EditRole trigger={setShowEditForm} details={editDetails} />
+        <EditRole hubId={hubId} trigger={setShowEditForm} details={editDetails} />
       )}
       {showAddForm && (
-        <AddRole
-          tenantId={tenantId}
-          refresh={refresh}
-          trigger={setShowAddForm}
-        />
+        <AddRole hubId={hubId} refresh={refresh} trigger={setShowAddForm} />
       )}
       <SpaceHorizontal height={10} />
       <DynamicTable

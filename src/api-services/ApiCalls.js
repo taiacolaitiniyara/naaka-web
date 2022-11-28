@@ -1,12 +1,16 @@
 import { AuthToken } from "../reusables/Constants";
 import { apiRoutes } from "./ApiRoutes";
 
+
+
 export const apiGet = (url, set, refresh) => {
+  //log("AuthToken()", AuthToken());
+
   fetch(apiRoutes.baseUrl + url, {
     method: "GET",
     headers: {
       accept: "*/*",
-      Authorization: AuthToken,
+      Authorization: AuthToken(),
     },
   })
     .then((r) => r.json())
@@ -44,7 +48,7 @@ export const apiGetWithTwoParameters = (
       method: "GET",
       headers: {
         accept: "*/*",
-        Authorization: AuthToken,
+        Authorization: AuthToken(),
       },
     }
   )
@@ -66,7 +70,7 @@ export const apiPost = (url, body, functions) => {
     headers: {
       accept: "*/*",
       "Content-Type": "application/json",
-      Authorization: AuthToken,
+      Authorization: AuthToken(),
     },
     body: JSON.stringify(body),
   })
@@ -86,7 +90,7 @@ export const apiPostFiles = (url, body, refresh) => {
     headers: {
       accept: "*/*",
       "Content-Type": `multipart/form-data`,
-      Authorization: AuthToken,
+      Authorization: AuthToken(),
     },
     body: JSON.stringify(body),
   })
@@ -106,7 +110,7 @@ export const apiPut = (url, body, refresh) => {
     headers: {
       accept: "*/*",
       "Content-Type": "application/json",
-      Authorization: AuthToken,
+      Authorization: AuthToken(),
     },
     body: JSON.stringify(body),
   })
@@ -126,13 +130,13 @@ export const verifyToken = (route) => {
     headers: {
       accept: "*/*",
       "Content-Type": "application/json",
-      Authorization: AuthToken,
+      Authorization: AuthToken(),
     },
   })
     .then((r) => r.json())
     .then((res) => {
       if (res === false) {
-        window.location.href = "/login";
+        window.location.href = "/user-login";
       } else if (route !== undefined) {
         window.location.href = route;
       }

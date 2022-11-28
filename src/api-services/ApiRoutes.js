@@ -83,4 +83,8 @@ export const apiRoutes = {
   addMetersFromFile: "/api/v1/Meter/addMetersFromFile",
   uploadTenantLogo: "/api/v1/Tenant/logo?TenantId=",
   colorList: `/api/v1/Lookup/getLookUps?TenantId=${TenantId}&Type=12`,
+  permissionGroup: "/api/v1/Permissions/permissionAllGroup?TenantId=",
+  permissions: "/api/v1/Permissions?TenantId=",
+  modules: "/api/v1/Permissions/getAllModules",
+  modulePermissions: "/api/v1/Permissions/allModulePerm?ModuleId=",
 };

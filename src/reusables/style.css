@@ -34,12 +34,12 @@
 }
 
 .popup-form-footer button {
-  width: 85px;
+  width: 75px;
 }
 
 .popup-form input,
 select,
-span {
+span, textarea {
   margin: 0;
   width: 100%;
 }

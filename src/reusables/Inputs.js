@@ -67,10 +67,14 @@ export const NumberInput = ({
   required,
   width,
 }) => {
+  const [val, setVal] = useState(value);
   return (
     <input
       type={"number"}
-      onChange={(v) => onChange(v.target.value)}
+      onChange={(v) => {
+        setVal(v.target.value);
+        onChange(val);
+      }}
       value={value}
       placeholder={placeholder}
       required={required}
@@ -93,7 +97,7 @@ export const DateInput = ({ onChange, value, required, width }) => {
 
 export const SelectColor = ({ set, width, value }) => {
   const [list, setList] = useState([]);
-  const [color, setColor] = useState("#444");
+  const [color, setColor] = useState(value !== undefined ? value : "#555");
   useEffect(() => {
     apiGet(apiRoutes.colorList, setList);
   }, []);
@@ -103,7 +107,6 @@ export const SelectColor = ({ set, width, value }) => {
         setColor(v.target.value);
         set(v.target.value);
       }}
-      defaultValue={value}
       style={{ backgroundColor: color, color: "#fff", width: `${width}%` }}
     >
       <option>Select Color</option>
@@ -175,6 +178,26 @@ export const DateTimeInput = ({ onChange, required, value, width }) => {
       required={required}
       value={value}
       style={{ width: `${width}%` }}
+    />
+  );
+};
+
+export const TextAreaInput = ({
+  placeholder,
+  onChange,
+  value,
+  width,
+  required,
+}) => {
+  return (
+    <textarea
+      placeholder={placeholder}
+      onChange={(v) => {
+        onChange(v.target.value);
+      }}
+      required={required}
+      value={value}
+      style={{ width: width }}
     />
   );
 };

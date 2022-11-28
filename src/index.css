@@ -106,6 +106,8 @@ textarea {
   background-color: #eee;
   border-radius: 2.5px;
   font-size: 0.9rem;
+  border-style: none;
+  padding: 5px 10px;
 }
 
 textarea:hover {
@@ -172,6 +174,7 @@ td {
 .edit-pen {
   padding: 5px;
   border-radius: 2.5px;
+  cursor: pointer;
 }
 
 .edit-pen:hover {

@@ -20,7 +20,7 @@ function ManagedLists() {
         <div key={i}>
           <Collapsible
             title={l.LookupTypeName}
-            child={<ManagedListTable title={l.LookupTypeName} id={l.Id} />}
+            child={<ManagedListTable title={l.LookupTypeName} type={l.Id} />}
           />
         </div>
       ))}

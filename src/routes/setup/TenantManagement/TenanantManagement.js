@@ -7,6 +7,7 @@ import { DynamicTable } from "../../../reusables/Tables";
 import Hub from "./Hub/Hub";
 import Role from "./Role/Role";
 import Tenant from "./Tenant/Tenant";
+import User from "./User/User";
 
 function TenanantManagement() {
   const [tenantId, setTenantId] = useState(1);
@@ -22,30 +23,7 @@ function TenanantManagement() {
       <SpaceHorizontal height={15} />
       <Role tenantId={tenantId} hubId={hubId} addBtnText={"Add Role"} />
       <SpaceHorizontal height={15} />
-      <DynamicTable
-        apiRoute={
-          apiRoutes.tenanthubusers + "TenantId=" + tenantId + "&HubId=" + hubId
-        }
-        height={150}
-        tableWidth={100}
-        rowHover={true}
-        seletableRow={true}
-        setValueFromSelectedRow={setHubId}
-        selectedRowValue={"Id"}
-        injectedParameters={[hubId, tenantId]}
-        columns={[
-          { path: "Name", name: "User" },
-          { path: "Role", name: "Role" },
-          { path: "Email", name: "Email" },
-          { path: "Phone", name: "Phone" },
-          {
-            edit: true,
-            editAction: () => {
-              console.log("Edit Action");
-            },
-          },
-        ]}
-      />
+      <User hubId={hubId} tenantId={tenantId} />
     </Layout>
   );
 }

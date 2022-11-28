@@ -1,50 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
 import {
-  NumberInput,
-  SelectColor,
-  SelectInput,
-  TextInput,
-} from "../../../../reusables/Inputs";
-import { apiGet, apiPost } from "../../../../api-services/ApiCalls";
+  PopupForm,
+  SpaceHorizontal,
+  SpaceVertical,
+} from "../../../../reusables/Elements";
+import { TextInput } from "../../../../reusables/Inputs";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
+import { AuthToken } from "../../../../reusables/Constants";
 
-function EditRole({ trigger, tenantId }) {
-  const [hubs, setHubs] = useState([]);
-  useEffect(() => {
-    apiGet(apiRoutes.hubs + tenantId, setHubs);
-  }, []);
-  const [name, setName] = useState();
-  const [isParent, setIsParent] = useState(false);
-  const [hubColor, setHubColor] = useState();
-  const [hubLevel, setHubLevel] = useState();
-  const [parentHubId, setParentHubId] = useState();
+function EditRole({ trigger, hubId, details }) {
+  const [roleName, setName] = useState(details.Name);
+  const [isHubAdmin, setIsHubAdmin] = useState(details.IsHubAdmin);
+  const [associatedHubId, setAssociatedHubId] = useState();
 
   function onSubmit() {
-    console.log("Submit");
-    apiPost(apiRoutes.tenants, {
-      Id: 0,
-      RoleId: 0,
-      Name: name,
-      IsParent: true,
-      Created: "2022-11-24T01:40:23.247Z",
-      HubColor: hubColor,
-      Fullname: name,
-      IsActive: true,
-      TextColor: "#fff",
-      HubLevel: hubLevel,
-      ParentHubId: parentHubId,
-      OrderBy: parentHubId,
-    });
+    fetch(
+      `${apiRoutes.baseUrl}/api/v1/UsersAndRoles/updateRoleForHub?RoleId=${details.Id}&RoleName=${roleName}&HubId=${details.HubId}&AssociatedHubId=${hubId}&IsHubAdmin=${isHubAdmin}`,
+      {
+        method: "PUT",
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: AuthToken,
+        },
+      }
+    )
+      .then((r) => r.json())
+      .then((r) => console.log(r))
+      .catch((e) => console.log(e));
   }
+
   return (
     <PopupForm
       width={400}
       trigger={trigger}
-      heading={"Edit Hub Role"}
+      heading={"Add Role to Hub ID = " + hubId}
       onSubmit={onSubmit}
       submitBtnText={"Save"}
     >
+      <TextInput value={roleName} placeholder={"Name"} onChange={setName} required={true} />
+      <SpaceHorizontal height={10} />
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <input
+          id="isHubAdmin"
+          type={"checkbox"}
+          style={{ width: "fit-content" }}
+          onChange={(v) => {
+            if (v.target.checked === true) {
+              setIsHubAdmin(true);
+            } else {
+              setIsHubAdmin(false);
+            }
+          }}
+          defaultChecked={isHubAdmin}
+        />
+        <SpaceVertical width={10} />
+        <label htmlFor={"isHubAdmin"}>Is Hub Admin</label>
+      </div>
     </PopupForm>
   );
 }

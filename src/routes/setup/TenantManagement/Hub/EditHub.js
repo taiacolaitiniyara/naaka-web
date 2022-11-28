@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { apiGet, apiPut } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
+import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
 import {
-  PopupForm,
-  SpaceHorizontal,
-} from "../../../../reusables/Elements";
-import {
-
   NumberInput,
   SelectColor,
   SelectInput,
@@ -25,27 +21,31 @@ function EditHub({ trigger, details }) {
   const [parentHubId, setParentHubId] = useState(details.ParentHubId);
 
   function onSubmit() {
-    function onSubmit() {
-      console.log("Submit");
-      apiPut(apiRoutes.hubUpdate, {
-        Id: 0,
-        TenantId: 0,
-        Name: name,
-        IsParent: true,
-        Created: "2022-11-24T01:40:23.247Z",
-        HubColor: hubColor,
-        Fullname: name,
-        IsActive: true,
-        TextColor: "#fff",
-        HubLevel: hubLevel,
-        ParentHubId: parentHubId,
-        OrderBy: parentHubId,
-      });
-    }
+    console.log("Submit");
+    apiPut(apiRoutes.hubUpdate, {
+      Id: details.Id,
+      TenantId: details.TenantId,
+      Name: name,
+      IsParent: details.IsParent,
+      Created: details.Created,
+      HubColor: hubColor,
+      Fullname: name,
+      IsActive: details.IsActive,
+      TextColor: details.TextColor,
+      HubLevel: hubLevel,
+      ParentHubId: parentHubId,
+      OrderBy: parentHubId,
+    });
   }
 
   return (
-    <PopupForm width={400} submitBtnText={"Save"} trigger={trigger}>
+    <PopupForm
+      onSubmit={onSubmit}
+      width={400}
+      submitBtnText={"Save"}
+      trigger={trigger}
+      heading={"Edit Hub"}
+    >
       <TextInput
         value={name}
         placeholder={"Name"}

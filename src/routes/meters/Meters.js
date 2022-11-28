@@ -11,6 +11,7 @@ function Meters() {
       <AddButton onClick={() => console.log("Add")} text={"Add Meters"} />
       <SpaceHorizontal height={10} />
       <DynamicTable
+        search
         apiRoute={apiRoutes.getAllMeters}
         columns={[
           { path: "MtrNoPhy", name: "Meter Num Phy" },

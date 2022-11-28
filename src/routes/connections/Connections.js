@@ -5,10 +5,10 @@ import { Status } from "../../reusables/Elements";
 import { DynamicTable } from "../../reusables/Tables";
 
 function Connections() {
-
   return (
     <Layout headerText={"Connections"}>
       <DynamicTable
+        search
         tableWidth={100}
         height={300}
         apiRoute={apiRoutes.getConnDetailsAll}
@@ -23,7 +23,11 @@ function Connections() {
           },
           { path: "ConnNum", name: "ConnNum" },
           { path: "ConnStatus", name: "Conn Status", color: "ConnStatusColor" },
-          { status: Status, name: "Meters Installed",path: "ConnMtrsInstalled" },
+          {
+            status: Status,
+            name: "Meters Installed",
+            path: "ConnMtrsInstalled",
+          },
           { path: "MeterNum", name: "Meter Num" },
           { status: Status, name: "Initial Reading", path: "IsInitialRead" },
           { path: "CustNum", name: "Cust Num" },
