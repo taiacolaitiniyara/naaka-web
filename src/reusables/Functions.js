@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { apiPost } from "../api-services/ApiCalls";
+
 export const LicenseKeyGenerator = (tenantName, onChange) => {
   const int = Math.random() * (9999 - 1000) + 1000;
   const splitTenantName = tenantName.split(" ");
@@ -21,3 +24,13 @@ export const LicenseKeyGenerator = (tenantName, onChange) => {
   });
   onChange(newKey.join(""));
 };
+
+export function addToApi(route, body, refresh) {
+  apiPost(route, body, refresh);
+}
+
+export function RefreshOnAddOrEdit() {
+  const [v, setV] = useState(0);
+  setV(v + 0);
+  return v;
+}

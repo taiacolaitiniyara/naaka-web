@@ -52,7 +52,17 @@ export const MenuListItem = ({ name, to }) => {
       to={to}
       style={{ textDecoration: "none", color: "#000", fontWeight: "700" }}
     >
-      <div className="menu-list-item">{name}</div>
+      <div
+        className="menu-list-item"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {name}
+        <i className="fa-solid fa-angle-right" />
+      </div>
     </Link>
   );
 };

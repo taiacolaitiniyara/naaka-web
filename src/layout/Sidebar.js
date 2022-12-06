@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { verifyToken } from "../api-services/ApiCalls";
 import { Image } from "../reusables/Elements";
-import { sidebarList } from "../reusables/Lists";
+import { appRoutes, sidebarList } from "../reusables/Lists";
 
 function Sidebar() {
   verifyToken();
@@ -10,12 +10,12 @@ function Sidebar() {
     <div className="nav">
       <div>
         <nav>
-          <Image name={"naakaLogo.png"} style={{width: "120px"}} />
+          <Image name={"naakaLogo.png"} style={{ width: "120px" }} />
 
-          {sidebarList.map((s, i) => (
-            <Link to={s.to} className="link" key={i}>
-              <div className="nav-title" id={s.id}>
-                <i className={`fa-solid fa-${s.icon}`} /> {s.name}
+          {sidebarList.map((sb, i) => (
+            <Link to={sb.to} className="link" key={i}>
+              <div className="nav-title" id={sb.id}>
+                <i className={`fa-solid fa-${sb.icon}`} /> {sb.name}
               </div>
             </Link>
           ))}
@@ -37,7 +37,7 @@ function Sidebar() {
               JSON.stringify({ TenantName: "Tenant", TenantId: 1 })
             );
 
-            window.location.href = "/user-login";
+            window.location.href = appRoutes.Login.path;
           }}
           className="nav-title link"
         >

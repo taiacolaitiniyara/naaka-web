@@ -1,35 +1,50 @@
-import { apiRoutes } from "../api-services/ApiRoutes";
 import { useFetchApiList } from "./CustomHooks";
+import { appRoutes } from "./AppRoutes";
 
-export const sidebarList = [
-  { name: "Home", to: "/home", icon: "house", id: "home-tab" },
+const sidebarList = [
+  { name: "Home", to: appRoutes.Home.path, icon: "house", id: "home-tab" },
   {
     name: "Customers",
-    to: "/customers",
+    to: appRoutes.Customers.path,
     icon: "users",
     id: "customers-tab",
   },
   {
     name: "Connections",
-    to: "/connections",
+    to: appRoutes.Connections.path,
     icon: "circle-nodes",
     id: "connections-tab",
   },
   { name: "Changes", to: "/changes", icon: "pen-to-square", id: "changes-tab" },
   {
     name: "Billing",
-    to: "/billing",
+    to: appRoutes.Billing.path,
     icon: "file-invoice-dollar",
     id: "billing-tab",
   },
-  { name: "Meters", to: "/meters", icon: "gauge", id: "meters-tab" },
-  { name: "Settings", to: "/settings", icon: "gear", id: "settings-tab" },
-  { name: "Setup", to: "/setup", icon: "screwdriver-wrench", id: "setup-tab" },
+  {
+    name: "Meters",
+    to: appRoutes.Meters.path,
+    icon: "gauge",
+    id: "meters-tab",
+  },
+  {
+    name: "Settings",
+    to: appRoutes.Settings.path,
+    icon: "gear",
+    id: "settings-tab",
+  },
+  {
+    name: "Setup",
+    to: appRoutes.Setup.path,
+    icon: "screwdriver-wrench",
+    id: "setup-tab",
+  },
 ];
 
-export const settingsList = [
+const settingsList = [
   {
-    to: "/settings/managedlists",
+    to: appRoutes.ManagedLists.path,
     name: "Managed Lists",
   },
   {
@@ -37,26 +52,31 @@ export const settingsList = [
     name: "Sanity Checks",
   },
   {
-    to: "/settings/tariffmanagement",
+    to: appRoutes.TariffManagement.path,
     name: "Tariff Management",
   },
   {
-    to: "/settings/processes",
+    to: appRoutes.ProcessTemplates.path,
     name: "Process Templates",
   },
   {
-    to: "/settings/processworkgroups",
+    to: appRoutes.ProcessWorkgroupsManagement.path,
     name: "Process Workgroups",
   },
   {
-    to: "/settings/meterinventory",
+    to: appRoutes.MeterInventory.path,
     name: "Meter Inventory",
   },
 ];
 
-export const setupList = [
+const metersMenuList = [
+  { to: appRoutes.MeterInventoryMain.path, name: "Meter Inventory" },
+  { to: appRoutes.MeterVendors.path, name: "Meters By Vendor" },
+];
+
+const setupList = [
   {
-    to: "/setup/tenantmanagement",
+    to: appRoutes.TenantManagement.path,
     name: "Tenant Management",
   },
   {
@@ -72,21 +92,37 @@ export const setupList = [
     name: "User Management",
   },
   {
-    to: "/setup/permissions",
-    name: "Permissions Management"
-  }
+    to: appRoutes.PermissionsManagement.path,
+    name: "Permissions Management",
+  },
 ];
 
-export const TenantTypeList = [
+const connectionsMenuList = [
+  { to: appRoutes.AddConnection.path, name: "Add Connection" },
+  { to: appRoutes.ConnectionsInventory.path, name: "Connections Inventory" },
+];
+
+const TenantTypeList = [
   { Id: 1, Name: "Billing" },
   { Id: 2, Name: "Utility" },
   { Id: 3, Name: "Vendor" },
 ];
 
-export const HubRolesList = (hubId, tenantId) => {
+const HubRolesList = (hubId, tenantId) => {
   const list = useFetchApiList(
     `/api/v1/UsersAndRoles/getRolesBelongToHub?HubId=${hubId}&TenantId=${tenantId}`
   );
 
   return list;
+};
+
+export {
+  sidebarList,
+  settingsList,
+  setupList,
+  TenantTypeList,
+  HubRolesList,
+  appRoutes,
+  metersMenuList,
+  connectionsMenuList
 };

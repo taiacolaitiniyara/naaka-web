@@ -1,56 +1,107 @@
 import { Offline, Online } from "react-detect-offline";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Welcome from "./routes/welcome/Welcome";
-import Login from "./routes/login/Login";
-import Sidebar from "./layout/Sidebar";
-import Billing from "./routes/billing/Billing";
-import Changes from "./routes/changes/Changes";
-import Customers from "./routes/customers/Customers";
-import Home from "./routes/home/Home";
-import Meters from "./routes/meters/Meters";
-import Settings from "./routes/settings/Settings";
-import Setup from "./routes/setup/Setup";
-import Connections from "./routes/connections/Connections";
-import ManagedLists from "./routes/settings/managed-lists.js/ManagedLists";
-import TariffManagement from "./routes/settings/tariff-management/TariffManagement";
-import TenanantManagement from "./routes/setup/TenantManagement/TenanantManagement";
-import PermissionsManagement from "./routes/setup/PermissionsManagement/PermissionsManagement";
+import { appRoutes } from "./reusables/Lists";
+import OfflinePopup from "./routes/offline/OfflinePopup";
 
 function App() {
   //console.log(JSON.parse(localStorage.getItem("userInfo")));
+
   return (
     <div className="App">
       <Online>
         <Router>
           <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="user-login" element={<Login />} />
-            <Route path="billing" element={<Billing />} />
-            <Route path="changes" element={<Changes />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="connections" element={<Connections />} />
-            <Route path="home" element={<Home />} />
-            <Route path="meters" element={<Meters />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="settings/managedlists" element={<ManagedLists />} />
-            <Route path="setup" element={<Setup />} />
             <Route
-              path="settings/tariffmanagement"
-              element={<TariffManagement />}
+              path={appRoutes.Home.path}
+              element={appRoutes.Home.element}
             />
             <Route
-              path="setup/tenantmanagement"
-              element={<TenanantManagement />}
+              path={appRoutes.Login.path}
+              element={appRoutes.Login.element}
             />
             <Route
-              path="setup/permissions"
-              element={<PermissionsManagement />}
+              path={appRoutes.Billing.path}
+              element={appRoutes.Billing.element}
+            />
+            <Route
+              path={appRoutes.Changes.path}
+              element={appRoutes.Changes.element}
+            />
+            <Route
+              path={appRoutes.Customers.path}
+              element={appRoutes.Customers.element}
+            />
+            <Route
+              path={appRoutes.Connections.path}
+              element={appRoutes.Connections.element}
+            />
+            <Route
+              path={appRoutes.Welcome.path}
+              element={appRoutes.Welcome.element}
+            />
+            <Route
+              path={appRoutes.Meters.path}
+              element={appRoutes.Meters.element}
+            />
+            <Route
+              path={appRoutes.Settings.path}
+              element={appRoutes.Settings.element}
+            />
+            <Route
+              path={appRoutes.ManagedLists.path}
+              element={appRoutes.ManagedLists.element}
+            />
+            <Route
+              path={appRoutes.Setup.path}
+              element={appRoutes.Setup.element}
+            />
+            <Route
+              path={appRoutes.TariffManagement.path}
+              element={appRoutes.TariffManagement.element}
+            />
+            <Route
+              path={appRoutes.MeterInventory.path}
+              element={appRoutes.MeterInventory.element}
+            />
+            <Route
+              path={appRoutes.TenantManagement.path}
+              element={appRoutes.TenantManagement.element}
+            />
+            <Route
+              path={appRoutes.PermissionsManagement.path}
+              element={appRoutes.PermissionsManagement.element}
+            />
+            <Route
+              path={appRoutes.ProcessTemplates.path}
+              element={appRoutes.ProcessTemplates.element}
+            />
+            <Route
+              path={appRoutes.MeterInventoryMain.path}
+              element={appRoutes.MeterInventoryMain.element}
+            />
+            <Route
+              path={appRoutes.MeterVendors.path}
+              element={appRoutes.MeterVendors.element}
+            />
+            <Route
+              path={appRoutes.ProcessWorkgroupsManagement.path}
+              element={appRoutes.ProcessWorkgroupsManagement.element}
+            />
+            <Route
+              path={appRoutes.AddConnection.path}
+              element={appRoutes.AddConnection.element}
+            />
+            <Route
+              path={appRoutes.ConnectionsInventory.path}
+              element={appRoutes.ConnectionsInventory.element}
             />
           </Routes>
         </Router>
       </Online>
-      <Offline></Offline>
+      <Offline>
+        <OfflinePopup />
+      </Offline>
     </div>
   );
 }

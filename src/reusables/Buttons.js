@@ -1,11 +1,7 @@
-export const AddButton = ({ text, onClick, style }) => {
+export const AddButton = ({ text, onClick, width }) => {
   return (
     <button
-      style={
-        style === undefined
-          ? { backgroundColor: "#196d91", color: "#fff" }
-          : style
-      }
+      style={{ backgroundColor: "#196d91", color: "#fff", width: `${width}px` }}
       type="button"
       onClick={() => onClick()}
     >
@@ -14,10 +10,10 @@ export const AddButton = ({ text, onClick, style }) => {
   );
 };
 
-export const CancelButton = ({ onClick, style }) => {
+export const CancelButton = ({ onClick, width }) => {
   return (
     <button
-      style={{ backgroundColor: "#ff0000", color: "#fff" }}
+      style={{ backgroundColor: "#ff0000", color: "#fff", width: `${width}px` }}
       type="button"
       onClick={() => onClick()}
     >
@@ -26,9 +22,12 @@ export const CancelButton = ({ onClick, style }) => {
   );
 };
 
-export const SubmitButton = ({text}) => {
+export const SubmitButton = ({ text, width }) => {
   return (
-    <button style={{ backgroundColor: "#196d91", color: "#fff" }} type="submit">
+    <button
+      style={{ backgroundColor: "#196d91", color: "#fff", width: `${width}px` }}
+      type="submit"
+    >
       {text}
     </button>
   );

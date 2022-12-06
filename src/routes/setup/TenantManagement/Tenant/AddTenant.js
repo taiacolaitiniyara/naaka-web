@@ -13,7 +13,7 @@ import {
 } from "../../../../reusables/Inputs";
 import { TenantTypeList } from "../../../../reusables/Lists";
 import { LicenseKeyGenerator } from "../../../../reusables/Functions";
-import AddAddressMap from "../../../../reusables/Maps";
+import { AddAddressMap } from "../../../../reusables/Maps";
 import { apiPost } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 

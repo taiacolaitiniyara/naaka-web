@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { apiGet, apiPost, apiPut } from "../../../api-services/ApiCalls";
+import { apiPost, apiPut } from "../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../api-services/ApiRoutes";
 import { AddButton, CancelButton } from "../../../reusables/Buttons";
 import {
@@ -10,27 +10,32 @@ import {
 import { SelectColor, TextInput } from "../../../reusables/Inputs";
 import { DynamicTable } from "../../../reusables/Tables";
 
-function AddNew({ title, trigger, type }) {
+function AddNew({ title, trigger, type, refresh }) {
   const [description, setDescription] = useState();
   const [itemDescription, setItemDescription] = useState();
   const [color, setColor] = useState();
 
   const add = () => {
-    apiPost(apiRoutes.addLookup, {
-      ResponseTimeDto: "string",
-      Id: 0,
-      TenantId: 0,
-      Description: description,
-      Type: type,
-      Mandatory: 0,
-      IsActive: true,
-      OrderBy: 0,
-      ItemDescription: itemDescription,
-      Color: color,
-      DecVal: 0,
-      ResponseTime: 0,
-    });
+    apiPost(
+      apiRoutes.addLookup,
+      {
+        ResponseTimeDto: "string",
+        Id: 0,
+        TenantId: 0,
+        Description: description,
+        Type: type,
+        Mandatory: 0,
+        IsActive: true,
+        OrderBy: 0,
+        ItemDescription: itemDescription,
+        Color: color,
+        DecVal: 0,
+        ResponseTime: 0,
+      },
+      () => refresh + 1
+    );
   };
+
   return trigger ? (
     <div>
       <div
@@ -62,6 +67,7 @@ function AddNew({ title, trigger, type }) {
           <AddButton text={"Add"} onClick={add} />
         </div>
       </div>
+      <SpaceHorizontal height={10} />
     </div>
   ) : (
     ""
@@ -106,13 +112,13 @@ function Edit({ trigger, details }) {
         {" "}
         <form style={{ display: "flex", alignItems: "center" }}>
           <TextInput
-            value={details.Description}
+            value={description}
             placeholder={"Name"}
             onChange={setDescription}
           />
           <SpaceVertical width={30} />
           <TextInput
-            value={details.ItemDescription}
+            value={itemDescription}
             placeholder={"Description"}
             onChange={setItemDescription}
           />
@@ -127,9 +133,9 @@ function Edit({ trigger, details }) {
             justifyContent: "flex-end",
           }}
         >
-          <CancelButton onClick={() => trigger(false)} />
+          <CancelButton width={75} onClick={() => trigger(false)} />
           <SpaceVertical width={5} />
-          <AddButton text={"Update"} onClick={edit} />
+          <AddButton text={"Update"} width={75} onClick={edit} />
         </div>
       </div>
       <SpaceHorizontal height={10} />
@@ -141,6 +147,7 @@ function ManagedListTable({ title, type }) {
   const [add, showAdd] = useState(false);
   const [edit, showEdit] = useState(false);
   const [details, setDetails] = useState({});
+  var refresh = 1;
   return (
     <div>
       <AddButton
@@ -153,10 +160,15 @@ function ManagedListTable({ title, type }) {
         }}
       />
       <SpaceHorizontal height={10} />
-      {add && <AddNew title={title} trigger={showAdd} type={type} />}
+      {add && (
+        <AddNew refresh={refresh} title={title} trigger={showAdd} type={type} />
+      )}
       {edit && <Edit trigger={showEdit} details={details} />}
       <DynamicTable
+        injectedParameters={[refresh]}
         tableWidth={100}
+        rowHover
+        seletableRow
         height={200}
         columns={[
           { path: "Description", name: title },

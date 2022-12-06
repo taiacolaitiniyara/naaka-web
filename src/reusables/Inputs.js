@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import readXlsxFile from "read-excel-file";
 import { apiGet } from "../api-services/ApiCalls";
 import { apiRoutes } from "../api-services/ApiRoutes";
 import { SpaceHorizontal, SpaceVertical } from "./Elements";
@@ -60,6 +61,42 @@ export const PasswordInput = ({
   );
 };
 
+export const ExcelInput = ({ setList }) => {
+  return (
+    <input
+      type={"file"}
+      onChange={(v) => {
+        let finalList = [];
+        readXlsxFile(v.target.files[0])
+          .then((v) => {
+            let tableValues = [];
+            let headerCols = [];
+            v[0].map((x) => {
+              headerCols.push(x);
+            });
+
+            v.map((x, i) => {
+              if (i !== 0) {
+                tableValues.push(x);
+              }
+            });
+
+            tableValues.map((x) => {
+              let obj = {};
+              x.map((e, i) => {
+                obj[headerCols[i]] = e;
+              });
+              finalList.push(obj);
+            });
+            setList(finalList);
+            console.log("FINAL LIST", finalList);
+          })
+          .catch((e) => console.log("Excel Reader Error: ", e));
+      }}
+    />
+  );
+};
+
 export const NumberInput = ({
   placeholder,
   onChange,
@@ -67,13 +104,11 @@ export const NumberInput = ({
   required,
   width,
 }) => {
-  const [val, setVal] = useState(value);
   return (
     <input
       type={"number"}
       onChange={(v) => {
-        setVal(v.target.value);
-        onChange(val);
+        onChange(parseInt(v.target.value));
       }}
       value={value}
       placeholder={placeholder}
@@ -86,8 +121,8 @@ export const NumberInput = ({
 export const DateInput = ({ onChange, value, required, width }) => {
   return (
     <input
-      type={"date"}
-      onChange={(v) => onChange(v.target.value)}
+      type={"datetime-local"}
+      onChange={(v) => onChange(v.target.value + ":12.111Z")}
       value={value}
       required={required}
       style={{ width: `${width}%` }}
@@ -108,10 +143,13 @@ export const SelectColor = ({ set, width, value }) => {
         set(v.target.value);
       }}
       style={{ backgroundColor: color, color: "#fff", width: `${width}%` }}
+      value={value}
     >
       <option>Select Color</option>
       {list.map((c, i) => (
-        <option value={c.ItemDescription}>{c.Description}</option>
+        <option key={i} value={c.ItemDescription}>
+          {c.Description}
+        </option>
       ))}
     </select>
   );
@@ -135,7 +173,7 @@ export const SelectInput = ({
           setValue(v.target.value);
         }
       }}
-      defaultValue={value}
+      value={value}
     >
       <option>{`Select ${listName}`}</option>
       {list.map((l, i) => (
@@ -170,6 +208,58 @@ export const DoubleInputs = ({
   );
 };
 
+export const TripleInputs = ({
+  width1,
+  input1,
+  width2,
+  input2,
+  width3,
+  input3,
+  label1,
+  label2,
+  label3,
+}) => {
+  return (
+    <div className="double-inputs">
+      <div style={{ width: `${width1}%` }}>
+        {label1}
+        <div>{input1}</div>
+      </div>
+      <SpaceVertical width={10} />
+      <div style={{ width: `${width2}%` }}>
+        {label2}
+        <div>{input2}</div>
+      </div>
+      <SpaceVertical width={10} />
+      <div style={{ width: `${width3}%` }}>
+        {label3}
+        <div>{input3}</div>
+      </div>
+    </div>
+  );
+};
+
+export const FileUploadInput = ({ onChange, required, width }) => {
+  return (
+    <input
+      type={"file"}
+      onChange={(v) => onChange(v.target.files[0])}
+      required={required}
+      style={{ width: `${width}%` }}
+    />
+  );
+};
+
+export const LogoUploadInput = ({ onChange, required }) => {
+  return (
+    <input
+      type={"file"}
+      onChange={(v) => onChange(v.target.files)}
+      required={required}
+    />
+  );
+};
+
 export const DateTimeInput = ({ onChange, required, value, width }) => {
   return (
     <input
@@ -199,5 +289,24 @@ export const TextAreaInput = ({
       value={value}
       style={{ width: width }}
     />
+  );
+};
+
+export const IsActiveInput = ({ isActive, idNumber, setIsActive }) => {
+  return (
+    <div style={{ padding: "5px" }}>
+      <label htmlFor={"IsActiveIcon" + idNumber}>IsActive</label>
+      <i
+        id={"IsActiveIcon" + idNumber}
+        className={`fa-solid fa-square${isActive === false ? "" : "-check"}`}
+        onClick={() => setIsActive(!isActive)}
+        style={{
+          color: isActive == true ? "#86b300" : "#444",
+          marginLeft: "10px",
+          fontSize: "1rem",
+          cursor: "pointer",
+        }}
+      />
+    </div>
   );
 };

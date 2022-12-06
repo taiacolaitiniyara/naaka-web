@@ -37,7 +37,6 @@ export const apiRoutes = {
   processTypes: "/api/v1/Process/processTypes",
   processes: "/api/v1/Process/processes",
   processEvents: "/api/v1/Process/processEvents",
-  processEventsReferences: "/api/v1/Process/processEventsReferences",
   processImpacts: "/api/v1/Process/processImpacts",
   processImpactByGrpId:
     "/api/v1/Process/processImpactsByGroupId?ProcessGroupId=",

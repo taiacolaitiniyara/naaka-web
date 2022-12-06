@@ -1,7 +1,6 @@
+import { appRoutes } from "../reusables/AppRoutes";
 import { AuthToken } from "../reusables/Constants";
 import { apiRoutes } from "./ApiRoutes";
-
-
 
 export const apiGet = (url, set, refresh) => {
   //log("AuthToken()", AuthToken());
@@ -136,10 +135,10 @@ export const verifyToken = (route) => {
     .then((r) => r.json())
     .then((res) => {
       if (res === false) {
-        window.location.href = "/user-login";
+        window.location.href = appRoutes.Login.path;
       } else if (route !== undefined) {
         window.location.href = route;
-      }
+      } 
     })
     .catch((e) => console.log("POST Call Error => ", e));
 };

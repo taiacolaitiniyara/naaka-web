@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import Layout from "../../../layout/Layout";
+import { useShadeTabs } from "../../../reusables/CustomHooks";
 import { SpaceHorizontal } from "../../../reusables/Elements";
 import Modules from "./Modules/Modules";
 import PermissionGroup from "./PermissionGroup/PermissionGroup";
 import Permissions from "./Permissions/Permissions";
 
 function PermissionsManagement() {
-  const [moduleId, setModuleId] = useState(3)
+  useShadeTabs("setup-tab");
+  const [moduleId, setModuleId] = useState(3);
   return (
     <Layout headerText={"Permissions Management"}>
       <Modules setModuleId={setModuleId} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { apiGetWithTwoParameters } from "../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../api-services/ApiRoutes";
 import Layout from "../../../layout/Layout";
+import { useShadeTabs } from "../../../reusables/CustomHooks";
 import { SpaceHorizontal, Status } from "../../../reusables/Elements";
 import { DynamicTable } from "../../../reusables/Tables";
 import Hub from "./Hub/Hub";
@@ -10,6 +11,7 @@ import Tenant from "./Tenant/Tenant";
 import User from "./User/User";
 
 function TenanantManagement() {
+  useShadeTabs("setup-tab");
   const [tenantId, setTenantId] = useState(1);
   const [hubId, setHubId] = useState(1);
   const [roleId, setRoleId] = useState("");

@@ -15,7 +15,7 @@ import {
   TextInput,
 } from "../../../../reusables/Inputs";
 import { TenantTypeList } from "../../../../reusables/Lists";
-import AddAddressMap from "../../../../reusables/Maps";
+import { AddAddressMap } from "../../../../reusables/Maps";
 
 function EditTenant({ trigger, details }) {
   const [tenantName, setTenantName] = useState(details.TenantName);

@@ -1,9 +1,11 @@
 import React from "react";
 import Layout from "../../layout/Layout";
+import { useShadeTabs } from "../../reusables/CustomHooks";
 import { MenuListItem } from "../../reusables/Elements";
 import { settingsList } from "../../reusables/Lists";
 
 function Settings() {
+  useShadeTabs("settings-tab")
   return (
     <Layout headerText={"Settings"}>
       {settingsList.sort((a, b) => {

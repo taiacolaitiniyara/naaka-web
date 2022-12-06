@@ -2,11 +2,12 @@ import React from "react";
 import { DynamicTable } from "../../../reusables/Tables";
 import { apiRoutes } from "../../../api-services/ApiRoutes";
 import { SpaceHorizontal, Status } from "../../../reusables/Elements";
+import { AddButton } from "../../../reusables/Buttons";
 
 function TariffRate({ id }) {
   return (
     <div>
-      <button type="button">Add Rate</button>
+      <AddButton text={"Add Rate"} onClick={() => console.log("Add")} />
       <SpaceHorizontal height={10} />
       <DynamicTable
         tableWidth={100}
