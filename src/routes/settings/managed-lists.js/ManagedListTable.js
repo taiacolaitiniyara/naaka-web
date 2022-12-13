@@ -3,143 +3,129 @@ import { apiPost, apiPut } from "../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../api-services/ApiRoutes";
 import { AddButton, CancelButton } from "../../../reusables/Buttons";
 import {
+  PopupForm,
   SpaceHorizontal,
   SpaceVertical,
   Status,
 } from "../../../reusables/Elements";
-import { SelectColor, TextInput } from "../../../reusables/Inputs";
+import { refreshOnClose } from "../../../reusables/Functions";
+import {
+  ColorPickerInput,
+  SelectColor,
+  TextInput,
+} from "../../../reusables/Inputs";
 import { DynamicTable } from "../../../reusables/Tables";
 
-function AddNew({ title, trigger, type, refresh }) {
+function AddNew({ title, trigger, type, refresh, setRefresh }) {
   const [description, setDescription] = useState();
-  const [itemDescription, setItemDescription] = useState();
+  const [itemDescription, setItemDescription] = useState(
+    type === 12 ? "#00bb59" : null
+  );
   const [color, setColor] = useState();
 
-  const add = () => {
-    apiPost(
-      apiRoutes.addLookup,
-      {
-        ResponseTimeDto: "string",
-        Id: 0,
-        TenantId: 0,
-        Description: description,
-        Type: type,
-        Mandatory: 0,
-        IsActive: true,
-        OrderBy: 0,
-        ItemDescription: itemDescription,
-        Color: color,
-        DecVal: 0,
-        ResponseTime: 0,
-      },
-      () => refresh + 1
-    );
-  };
-
-  return trigger ? (
-    <div>
-      <div
-        style={{
-          width: "fit-content",
-          padding: "15px",
-          boxShadow: "0 0 5px rgba(0, 0, 0, 0.25)",
-          borderRadius: "10px",
-        }}
-      >
-        <form style={{ display: "flex", alignItems: "center" }}>
-          <TextInput placeholder={title} onChange={setDescription} />
-          <SpaceVertical width={30} />
-          <TextInput
-            placeholder={"Description"}
-            onChange={setItemDescription}
-          />
-          <SpaceVertical width={30} />
-          <SelectColor set={setColor} />
-        </form>
+  return (
+    <PopupForm
+      submitBtnText={"Save"}
+      trigger={trigger}
+      width={400}
+      heading={`Add ${title}`}
+      onSubmit={() => {
+        apiPost(
+          apiRoutes.addLookup,
+          {
+            ResponseTimeDto: "string",
+            Id: 0,
+            TenantId: 0,
+            Description: description,
+            Type: type,
+            Mandatory: 0,
+            IsActive: true,
+            OrderBy: 0,
+            ItemDescription: itemDescription,
+            Color: type === 12 ? itemDescription : color,
+            DecVal: 0,
+            ResponseTime: 0,
+          },
+          () => refreshOnClose(setRefresh, refresh, trigger)
+        );
+      }}
+    >
+      <TextInput placeholder={title} onChange={setDescription} />
+      <div style={{ display: type !== 12 ? "none" : "block" }}>
         <SpaceHorizontal height={10} />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <AddButton text={"Add"} onClick={add} />
-        </div>
+        <ColorPickerInput onChange={setItemDescription} />
       </div>
       <SpaceHorizontal height={10} />
-    </div>
-  ) : (
-    ""
+      <TextInput
+        value={itemDescription}
+        placeholder={"Description"}
+        onChange={setItemDescription}
+      />
+      <SpaceHorizontal height={10} />
+      <div style={{ display: type === 12 ? "none" : "block" }}>
+        <SelectColor set={setColor} value={color} />
+      </div>
+    </PopupForm>
   );
 }
 
-function Edit({ trigger, details }) {
+function Edit({ trigger, details, refresh, setRefresh }) {
   const [description, setDescription] = useState(details.Description);
   const [itemDescription, setItemDescription] = useState(
     details.ItemDescription
   );
   const [color, setColor] = useState(details.Color);
 
-  console.log("Details", details);
-  const edit = () => {
-    apiPut(apiRoutes.updateLookup, {
-      ResponseTimeDto: "string",
-      Id: details.Id,
-      TenantId: 0,
-      Description: description,
-      Type: details.Type,
-      Mandatory: 0,
-      IsActive: true,
-      OrderBy: 0,
-      ItemDescription: itemDescription,
-      Color: color,
-      DecVal: 0,
-      ResponseTime: 0,
-    });
-  };
-
   return (
-    <div>
-      <div
-        style={{
-          width: "fit-content",
-          padding: "15px",
-          boxShadow: "0 0 5px rgba(0, 0, 0, 0.25)",
-          borderRadius: "10px",
-        }}
-      >
-        {" "}
-        <form style={{ display: "flex", alignItems: "center" }}>
-          <TextInput
-            value={description}
-            placeholder={"Name"}
-            onChange={setDescription}
-          />
-          <SpaceVertical width={30} />
-          <TextInput
-            value={itemDescription}
-            placeholder={"Description"}
-            onChange={setItemDescription}
-          />
-          <SpaceVertical width={30} />
-          <SelectColor value={color} set={setColor} />
-        </form>
+    <PopupForm
+      heading={`Edit ${details.Description}`}
+      trigger={trigger}
+      submitBtnText={"Save"}
+      width={400}
+      onSubmit={() => {
+        apiPut(
+          apiRoutes.updateLookup,
+          {
+            ResponseTimeDto: "string",
+            Id: details.Id,
+            TenantId: 0,
+            Description: description,
+            Type: details.Type,
+            Mandatory: 0,
+            IsActive: true,
+            OrderBy: 0,
+            ItemDescription: itemDescription,
+            Color: details.Type === 12 ? itemDescription : color,
+            DecVal: 0,
+            ResponseTime: 0,
+          },
+          () => refreshOnClose(setRefresh, refresh, trigger)
+        );
+      }}
+    >
+      <TextInput
+        value={description}
+        placeholder={"Name"}
+        onChange={setDescription}
+      />
+      <div style={{ display: details.Type !== 12 ? "none" : "block" }}>
         <SpaceHorizontal height={10} />
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <CancelButton width={75} onClick={() => trigger(false)} />
-          <SpaceVertical width={5} />
-          <AddButton text={"Update"} width={75} onClick={edit} />
-        </div>
+        <ColorPickerInput
+          value={details.ItemDescription}
+          onChange={setItemDescription}
+        />
       </div>
       <SpaceHorizontal height={10} />
-    </div>
+      <TextInput
+        value={itemDescription}
+        placeholder={"Description"}
+        onChange={setItemDescription}
+      />
+      <SpaceHorizontal height={10} />
+      <div style={{ display: details.Type === 12 ? "none" : "block" }}>
+        <SelectColor set={setColor} value={color} />
+      </div>
+    </PopupForm>
   );
 }
 
@@ -147,7 +133,8 @@ function ManagedListTable({ title, type }) {
   const [add, showAdd] = useState(false);
   const [edit, showEdit] = useState(false);
   const [details, setDetails] = useState({});
-  var refresh = 1;
+  const [refresh, setRefresh] = useState(1);
+  console.log("Refresh", refresh);
   return (
     <div>
       <AddButton
@@ -161,9 +148,22 @@ function ManagedListTable({ title, type }) {
       />
       <SpaceHorizontal height={10} />
       {add && (
-        <AddNew refresh={refresh} title={title} trigger={showAdd} type={type} />
+        <AddNew
+          setRefresh={setRefresh}
+          refresh={refresh}
+          title={title}
+          trigger={showAdd}
+          type={type}
+        />
       )}
-      {edit && <Edit trigger={showEdit} details={details} />}
+      {edit && (
+        <Edit
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={showEdit}
+          details={details}
+        />
+      )}
       <DynamicTable
         injectedParameters={[refresh]}
         tableWidth={100}
@@ -171,9 +171,9 @@ function ManagedListTable({ title, type }) {
         seletableRow
         height={200}
         columns={[
-          { path: "Description", name: title },
-          { path: "ItemDescription", name: "Desccription" },
-          { path: "Color", color: "Color", name: "Color" },
+          { path: "Description", name: title, sort: true },
+          { path: "ItemDescription", name: "Desccription", sort: true },
+          { path: "Color", color: "Color", name: "Color", sort: true },
           { path: "IsActive", name: "IsActive", status: Status },
           {
             path: "",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../../layout/Layout";
 import { useShadeTabs } from "../../../reusables/CustomHooks";
 import { SpaceHorizontal } from "../../../reusables/Elements";
@@ -9,18 +9,24 @@ import ProcessWorkers from "./process-workers/ProcessWorkers";
 import ProcessWorkgroups from "./processworkgroups/ProcessWorkgroups";
 
 function ProcessWorkgroupManagement() {
+  const [refresh, setRefresh] = useState(1);
+  const [regionId, setRegionId] = useState(0);
+  const [depotId, setDepotId] = useState(0);
+  const [workgroupId, setWorkgroupId] = useState(0);
+  const [roleId, setRoleId] = useState(0);
+
   useShadeTabs("settings-tab");
   return (
     <Layout headerText={"Process Workgroups"}>
-      <ProcessRegions />
+      <ProcessRegions refresh={refresh} setRefresh={setRefresh} />
       <SpaceHorizontal height={10} />
-      <ProcessDepots />
+      <ProcessDepots refresh={refresh} setRefresh={setRefresh} />
       <SpaceHorizontal height={10} />
-      <ProcessWorkgroups />
+      <ProcessWorkgroups refresh={refresh} setRefresh={setRefresh} />
       <SpaceHorizontal height={10} />
-      <ProcessRoles />
+      <ProcessRoles refresh={refresh} setRefresh={setRefresh} />
       <SpaceHorizontal height={10} />
-      <ProcessWorkers />
+      <ProcessWorkers refresh={refresh} setRefresh={setRefresh} />
     </Layout>
   );
 }

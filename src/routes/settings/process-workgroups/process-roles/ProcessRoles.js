@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { AddButton } from "../../../../reusables/Buttons";
 import { SpaceHorizontal, Status } from "../../../../reusables/Elements";
-import { ProcessTable } from "../../../../reusables/Tables";
+import { DynamicTable } from "../../../../reusables/Tables";
 import AddProcessRoles from "./AddProcessRoles";
 import EditProcessRoles from "./EditProcessRoles";
 
-function ProcessRoles({ setGroupId, setImpactId, setTypeId, setNameId }) {
+function ProcessRoles({ refresh, setRefresh }) {
   const [addProcessRoles, setAddProcessRoles] = useState(false);
   const [editProcessRoles, setEditProcessRoles] = useState(false);
   const [details, setDetails] = useState({});
@@ -18,14 +18,13 @@ function ProcessRoles({ setGroupId, setImpactId, setTypeId, setNameId }) {
         onClick={() => setAddProcessRoles(true)}
       />
       <SpaceHorizontal height={5} />
-      <ProcessTable
+      <DynamicTable
         tableWidth={100}
         height={150}
         apiRoute={apiRoutes.processRoles}
         rowHover
         seletableRow
-        setValueFromSelectedRow={setGroupId}
-        selectedRowValue={"Id"}
+        injectedParameters={[refresh]}
         columns={[
           { path: "Descrip", name: "Role" },
           { path: "Abbrev", name: "Abbreviation" },
@@ -39,17 +38,18 @@ function ProcessRoles({ setGroupId, setImpactId, setTypeId, setNameId }) {
             setEditDetails: setDetails,
           },
         ]}
-        otherSetterFunctions={() => {
-          setImpactId(0);
-          setTypeId(0);
-          setNameId(0);
-        }}
       />
       {addProcessRoles && (
-        <AddProcessRoles trigger={setAddProcessRoles} />
+        <AddProcessRoles
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessRoles}
+        />
       )}
       {editProcessRoles && (
         <EditProcessRoles
+          refresh={refresh}
+          setRefresh={setRefresh}
           trigger={setEditProcessRoles}
           details={details}
         />

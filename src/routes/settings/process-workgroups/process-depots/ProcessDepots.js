@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { AddButton } from "../../../../reusables/Buttons";
 import { SpaceHorizontal, Status } from "../../../../reusables/Elements";
-import { ProcessTable } from "../../../../reusables/Tables";
+import { DynamicTable } from "../../../../reusables/Tables";
 import AddProcessDepots from "./AddProcessDepots";
 import EditProcessDepots from "./EditProcessDepots";
 
-function ProcessDepots() {
+function ProcessDepots({ refresh, setRefresh }) {
   const [addProcessDepots, setAddProcessDepots] = useState(false);
   const [editProcessDepots, setEditProcessDepots] = useState(false);
   const [details, setDetails] = useState({});
@@ -18,12 +18,13 @@ function ProcessDepots() {
         onClick={() => setAddProcessDepots(true)}
       />
       <SpaceHorizontal height={5} />
-      <ProcessTable
+      <DynamicTable
         tableWidth={100}
         height={150}
         apiRoute={apiRoutes.processDepots}
         rowHover
         seletableRow
+        injectedParameters={[refresh]}
         columns={[
           { path: "Descrip", name: "Depot" },
           { path: "Abbrev", name: "Abbreviation" },
@@ -41,9 +42,20 @@ function ProcessDepots() {
           },
         ]}
       />
-      {addProcessDepots && <AddProcessDepots trigger={setAddProcessDepots} />}
+      {addProcessDepots && (
+        <AddProcessDepots
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessDepots}
+        />
+      )}
       {editProcessDepots && (
-        <EditProcessDepots trigger={setEditProcessDepots} details={details} />
+        <EditProcessDepots
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setEditProcessDepots}
+          details={details}
+        />
       )}
     </div>
   );

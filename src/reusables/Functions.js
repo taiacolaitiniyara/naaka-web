@@ -34,3 +34,18 @@ export function RefreshOnAddOrEdit() {
   setV(v + 0);
   return v;
 }
+
+export function refreshOnClose(setRefresh, refresh, trigger) {
+  setRefresh(refresh + refresh);
+  trigger(false);
+}
+
+export function DateFormatter(date) {
+  if (date != null || date === undefined) {
+    const splitDateAndTime = date.split("T");
+    const splitDate = splitDateAndTime[0].split("-");
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+  } else {
+    return date;
+  }
+}

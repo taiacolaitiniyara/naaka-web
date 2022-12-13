@@ -17,12 +17,11 @@ import {
 
 function AddMetersFromFile({ trigger }) {
   const vendorList = useFetchApiList(apiRoutes.meterVendors);
-  const warrantyStartEvents = useFetchApiList(apiRoutes.meterVendorEvents);
+  const warrantyStartEvents = useFetchApiList(apiRoutes.meterVendorEventsRef);
   const [mtrVendor, setMtrVendor] = useState();
   const [dateInvoiced, setDateInvoiced] = useState();
   const [dateShipped, setDateShipped] = useState();
   const [dateReceived, setDateReceived] = useState();
-  const [mtrFile, setMtrFile] = useState(null);
   const [warrantyMonths, setWarrantyMonths] = useState();
   const [warrantyStartEvent, setWarrantyStartEvent] = useState();
   const [newMtrsList, setNewMtrsList] = useState([]);
@@ -61,7 +60,7 @@ function AddMetersFromFile({ trigger }) {
       WarrantyMonths: warrantyMonths,
     };
 
-    console.log("Entry = ", mtrFile, "METER DETAILS: ", meterDetails);
+    console.log(JSON.stringify(meterDetails));
     apiPost(apiRoutes.addMetersFromFile, meterDetails);
   };
 

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { AddButton } from "../../../../reusables/Buttons";
 import { SpaceHorizontal, Status } from "../../../../reusables/Elements";
-import { ProcessTable } from "../../../../reusables/Tables";
+import { DynamicTable } from "../../../../reusables/Tables";
 import AddProcessWorkgroups from "./AddProcessWorkgroups";
 import EditProcessWorkgroups from "./EditProcessWorkgroups";
 
-function ProcessWorkgroups({ setGroupId, setImpactId, setTypeId, setNameId }) {
+function ProcessWorkgroups({ refresh, setRefresh }) {
   const [addProcessWorkgroups, setAddProcessWorkgroups] = useState(false);
   const [editProcessWorkgroups, setEditProcessWorkgroups] = useState(false);
   const [details, setDetails] = useState({});
@@ -18,14 +18,13 @@ function ProcessWorkgroups({ setGroupId, setImpactId, setTypeId, setNameId }) {
         onClick={() => setAddProcessWorkgroups(true)}
       />
       <SpaceHorizontal height={5} />
-      <ProcessTable
+      <DynamicTable
         tableWidth={100}
         height={150}
         apiRoute={apiRoutes.processWorkgroups}
         rowHover
         seletableRow
-        setValueFromSelectedRow={setGroupId}
-        selectedRowValue={"Id"}
+        injectedParameters={[refresh]}
         columns={[
           { path: "Descrip", name: "Workgroup" },
           { path: "Abbrev", name: "Abbreviation" },
@@ -39,17 +38,17 @@ function ProcessWorkgroups({ setGroupId, setImpactId, setTypeId, setNameId }) {
             setEditDetails: setDetails,
           },
         ]}
-        otherSetterFunctions={() => {
-          setImpactId(0);
-          setTypeId(0);
-          setNameId(0);
-        }}
       />
       {addProcessWorkgroups && (
         <AddProcessWorkgroups trigger={setAddProcessWorkgroups} />
       )}
       {editProcessWorkgroups && (
-        <EditProcessWorkgroups trigger={setEditProcessWorkgroups} details={details} />
+        <EditProcessWorkgroups
+          trigger={setEditProcessWorkgroups}
+          details={details}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
       )}
     </div>
   );

@@ -9,7 +9,7 @@ function Connections() {
   return (
     <Layout headerText={"Connections"}>
       {connectionsMenuList.map((c, i) => (
-        <MenuListItem to={c.to} name={c.name} />
+        <MenuListItem key={i} to={c.to} name={c.name} />
       ))}
     </Layout>
   );

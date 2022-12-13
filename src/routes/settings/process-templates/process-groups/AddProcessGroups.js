@@ -4,19 +4,23 @@ import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
 import { SelectColor, TextInput } from "../../../../reusables/Inputs";
 
-function AddProcessGroups({ trigger }) {
+function AddProcessGroups({ trigger, refresh, setRefresh }) {
   const [descrip, setDescrip] = useState();
   const [color, setColor] = useState();
 
   const add = () => {
-    apiPost(apiRoutes.processGroups, {
-      Id: 0,
-      TenantId: 0,
-      Color: color,
-      IsActive: true,
-      Descrip: descrip,
-      Prefix: descrip.split("")[0],
-    });
+    apiPost(
+      apiRoutes.processGroups,
+      {
+        Id: 0,
+        TenantId: 0,
+        Color: color,
+        IsActive: true,
+        Descrip: descrip,
+        Prefix: descrip.split("")[0],
+      },
+      () => setRefresh(refresh + 1)
+    );
     trigger(false);
   };
   return trigger ? (

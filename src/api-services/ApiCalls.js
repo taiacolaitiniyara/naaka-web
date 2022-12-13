@@ -63,6 +63,9 @@ export const apiGetWithTwoParameters = (
     .catch((e) => console.log("GET Call Error => ", e, url));
 };
 
+
+
+
 export const apiPost = (url, body, functions) => {
   fetch(apiRoutes.baseUrl + url, {
     method: "POST",
@@ -75,13 +78,16 @@ export const apiPost = (url, body, functions) => {
   })
     .then((r) => r.json())
     .then((res) => {
-      console.log(res);
+      console.log("POST Response => ", res);
       if (functions !== undefined) {
         functions();
       }
     })
-    .catch((e) => console.log("POST Call Error => ", e));
+    .catch((e) => console.log("POST Error => ", e));
 };
+
+
+
 
 export const apiPostFiles = (url, body, refresh) => {
   fetch(apiRoutes.baseUrl + url, {
@@ -103,7 +109,7 @@ export const apiPostFiles = (url, body, refresh) => {
     .catch((e) => console.log("POST Call Error => ", e));
 };
 
-export const apiPut = (url, body, refresh) => {
+export const apiPut = (url, body, functions) => {
   fetch(apiRoutes.baseUrl + url, {
     method: "PUT",
     headers: {
@@ -116,8 +122,8 @@ export const apiPut = (url, body, refresh) => {
     .then((r) => r.json())
     .then((res) => {
       console.log(res);
-      if (refresh !== undefined) {
-        refresh();
+      if (functions !== undefined) {
+        functions();
       }
     })
     .catch((e) => console.log("PUT Call Error => ", e));

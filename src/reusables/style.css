@@ -58,3 +58,44 @@ span, textarea {
 .double-inputs input {
   width: 100%;
 }
+
+.select-multiple {
+  background-color: #eee;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 2.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select-multiple:hover {
+  background-color: #fff;
+  outline: 2px solid #84cc01;
+}
+
+.select-multiple-option {
+  display: flex;
+  padding: 5px 10px;
+  margin: 2.5px;
+  border-radius: 5px;
+}
+
+.select-multiple-option:hover {
+  background-color: #eee;
+}
+
+.select-multiple-option input {
+  width: fit-content;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.select-multiple-option input:hover {
+  outline: none;
+}
+
+.select-multiple-option label {
+  width: 100%;
+  cursor: pointer;
+}

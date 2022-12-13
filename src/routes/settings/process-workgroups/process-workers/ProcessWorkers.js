@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { AddButton } from "../../../../reusables/Buttons";
 import { SpaceHorizontal, Status } from "../../../../reusables/Elements";
-import { ProcessTable } from "../../../../reusables/Tables";
+import { DynamicTable } from "../../../../reusables/Tables";
 import AddProcessWorkers from "./AddProcessWorkers";
 import EditProcessWorkers from "./EditProcessWorkers";
 
-function ProcessWorkers({ setGroupId, setImpactId, setTypeId, setNameId }) {
+function ProcessWorkers({ refresh, setRefresh }) {
   const [addProcessWorkers, setAddProcessWorkers] = useState(false);
   const [editProcessWorkers, setEditProcessWorkers] = useState(false);
   const [details, setDetails] = useState({});
@@ -18,16 +18,15 @@ function ProcessWorkers({ setGroupId, setImpactId, setTypeId, setNameId }) {
         onClick={() => setAddProcessWorkers(true)}
       />
       <SpaceHorizontal height={5} />
-      <ProcessTable
+      <DynamicTable
         tableWidth={100}
         height={150}
         apiRoute={apiRoutes.processWorkers}
         rowHover
         seletableRow
-        setValueFromSelectedRow={setGroupId}
-        selectedRowValue={"Id"}
+        injectedParameters={[refresh]}
         columns={[
-          { path: "Descrip", name: "Workgroup" },
+          { path: "Descrip", name: "Name" },
           { path: "Role", name: "Role" },
           { path: "Workgroup", name: "Workgroup" },
           { path: "Depot", name: "Depot" },
@@ -42,17 +41,21 @@ function ProcessWorkers({ setGroupId, setImpactId, setTypeId, setNameId }) {
             setEditDetails: setDetails,
           },
         ]}
-        otherSetterFunctions={() => {
-          setImpactId(0);
-          setTypeId(0);
-          setNameId(0);
-        }}
       />
       {addProcessWorkers && (
-        <AddProcessWorkers trigger={setAddProcessWorkers} />
+        <AddProcessWorkers
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessWorkers}
+        />
       )}
       {editProcessWorkers && (
-        <EditProcessWorkers trigger={setEditProcessWorkers} details={details} />
+        <EditProcessWorkers
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setEditProcessWorkers}
+          details={details}
+        />
       )}
     </div>
   );

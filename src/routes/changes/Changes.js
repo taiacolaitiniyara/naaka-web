@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import Layout from "../../layout/Layout";
+import { useShadeTabs } from "../../reusables/CustomHooks";
 
 function Changes() {
-  return (
-    <div>Changes</div>
-  )
+  useShadeTabs("changes-tab");
+  return <Layout headerText={"Changes"}>Changes</Layout>;
 }
 
-export default Changes
+export default Changes;

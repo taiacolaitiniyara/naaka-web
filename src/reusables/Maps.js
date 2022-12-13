@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { geocodeByLatLng } from "react-google-places-autocomplete";
-import { SpaceHorizontal } from "./Elements";
 
 export const AddAddressMap = (props) => {
   const apiKey = "AIzaSyBOi8QTpYyNNGAh4Rue0QPYBwz6IOJeEe8";
@@ -35,8 +34,8 @@ export const AddAddressMap = (props) => {
       mapContainerClassName="map"
       apiKey={props.apiKey}
       mapContainerStyle={{
-        width: props.width,
-        height: props.height,
+        width: `${props.width}%`,
+        height: `${props.height}px`,
         borderRadius: "5px",
       }}
     >
@@ -79,7 +78,7 @@ export const ConnectionsMap = (props) => {
   return (
     <div>
       <GoogleMap
-        zoom={15}
+        zoom={12.5}
         center={{ lat: lat, lng: lng }}
         mapContainerClassName="map"
         apiKey={props.apiKey}
@@ -101,5 +100,33 @@ export const ConnectionsMap = (props) => {
         ))}
       </GoogleMap>
     </div>
+  );
+};
+
+export const DisplayAddressMap = ({ lat, lng, width, height }) => {
+  const apiKey = "AIzaSyBOi8QTpYyNNGAh4Rue0QPYBwz6IOJeEe8";
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey,
+  });
+
+  if (!isLoaded) return <div>Loading...</div>;
+  return (
+    <GoogleMap
+      zoom={14}
+      center={{ lat: lat === null ? 0.0 : lat, lng: lng === null ? 0.0 : lng }}
+      apiKey={apiKey}
+      mapContainerStyle={{
+        width: `${width}%`,
+        height: `${height}px`,
+        borderRadius: "5px",
+      }}
+    >
+      <MarkerF
+        position={{
+          lat: lat === null ? 0.0 : lat,
+          lng: lng === null ? 0.0 : lng,
+        }}
+      />
+    </GoogleMap>
   );
 };

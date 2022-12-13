@@ -8,20 +8,23 @@ import {
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function EditProcessGroups({ trigger, details, refresh }) {
+function EditProcessGroups({ trigger, details, refresh, setRefresh }) {
   const [descrip, setDescrip] = useState(details.Descrip);
   const [color, setColor] = useState(details.Color);
   const [isActive, setIsActive] = useState(details.IsActive);
   function add() {
-    apiPut(apiRoutes.processGroups, {
-      Id: details.Id,
-      TenantId: details.TenantId,
-      Color: color,
-      IsActive: isActive,
-      Descrip: descrip,
-      Prefix: descrip.split("")[0],
-    });
-    refresh();
+    apiPut(
+      apiRoutes.processGroups,
+      {
+        Id: details.Id,
+        TenantId: details.TenantId,
+        Color: color,
+        IsActive: isActive,
+        Descrip: descrip,
+        Prefix: descrip.split("")[0],
+      },
+      () => setRefresh(refresh + 1)
+    );
     trigger(false);
   }
   return trigger ? (

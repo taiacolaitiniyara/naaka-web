@@ -11,6 +11,7 @@ import ProcessTypes from "./process-types/ProcessTypes";
 
 function ProcessTemplates() {
   useShadeTabs("settings-tab");
+  const [refresh, setRefresh] = useState(1);
   const [groupId, setGroupId] = useState(0);
   const [impactId, setImpactId] = useState(0);
   const [typeId, setTypeId] = useState(0);
@@ -22,6 +23,8 @@ function ProcessTemplates() {
         setImpactId={setImpactId}
         setNameId={setNameId}
         setTypeId={setTypeId}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
       <SpaceHorizontal height={10} />
       <ProcessImpacts
@@ -29,19 +32,32 @@ function ProcessTemplates() {
         setTypeId={setTypeId}
         setNameId={setNameId}
         setImpactId={setImpactId}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
       <SpaceHorizontal height={10} />
       <ProcessTypes
         impactId={impactId}
         setTypeId={setTypeId}
         setNameId={setNameId}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
       <SpaceHorizontal height={10} />
-      <ProcessNames setNameId={setNameId} typeId={typeId} />
+      <ProcessNames
+        refresh={refresh}
+        setRefresh={setRefresh}
+        setNameId={setNameId}
+        typeId={typeId}
+      />
       <SpaceHorizontal height={10} />
-      <ProcessEvents nameId={nameId} />
+      <ProcessEvents
+        refresh={refresh}
+        setRefresh={setRefresh}
+        nameId={nameId}
+      />
       <SpaceHorizontal height={10} />
-      <ProcessEventsTemplate />
+      <ProcessEventsTemplate refresh={refresh} setRefresh={setRefresh} />
     </Layout>
   );
 }

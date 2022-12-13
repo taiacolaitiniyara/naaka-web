@@ -6,7 +6,7 @@ import { ProcessTable } from "../../../../reusables/Tables";
 import AddProcessTypes from "./AddProcessTypes";
 import EditProcessTypes from "./EditProcessTypes";
 
-function ProcessTypes({ impactId, setTypeId, setNameId }) {
+function ProcessTypes({ impactId, setTypeId, setNameId, refresh, setRefresh }) {
   const [addProcessTypes, setAddProcessTypes] = useState(false);
   const [editProcessTypes, setEditProcessTypes] = useState(false);
   const [details, setDetails] = useState({});
@@ -24,7 +24,7 @@ function ProcessTypes({ impactId, setTypeId, setNameId }) {
         apiRoute={apiRoutes.processTypesByImpactId + impactId}
         rowHover
         seletableRow
-        injectedParameters={[impactId]}
+        injectedParameters={[impactId, refresh]}
         selectedRowValue={"Id"}
         setValueFromSelectedRow={setTypeId}
         otherSetterFunctions={() => {
@@ -45,10 +45,20 @@ function ProcessTypes({ impactId, setTypeId, setNameId }) {
         ]}
       />
       {addProcessTypes && (
-        <AddProcessTypes trigger={setAddProcessTypes} impactId={impactId} />
+        <AddProcessTypes
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessTypes}
+          impactId={impactId}
+        />
       )}
       {editProcessTypes && (
-        <EditProcessTypes trigger={setEditProcessTypes} details={details} />
+        <EditProcessTypes
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setEditProcessTypes}
+          details={details}
+        />
       )}
     </div>
   );

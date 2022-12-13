@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function AddProcessNames({ trigger, typeId }) {
+function AddProcessNames({ trigger, typeId, refresh, setRefresh }) {
   const units = useFetchApiList(apiRoutes.processTimeunits);
   const owners = useFetchApiList(apiRoutes.processWorkers);
   const [descrip, setDescrip] = useState();
@@ -25,18 +25,25 @@ function AddProcessNames({ trigger, typeId }) {
     <PopupForm
       trigger={trigger}
       onSubmit={() => {
-        addToApi(apiRoutes.processNames, {
-          Id: 0,
-          TenantId: 0,
-          Color: color,
-          IsActive: true,
-          Descrip: descrip,
-          ProcessTypeId: typeId,
-          TargetPercent: targetPercent,
-          TargetPeriod: targetPeriod,
-          TargetPeriodUnitId: periodUnitId,
-          SlaOwner: owner,
-        });
+        addToApi(
+          apiRoutes.processNames,
+          {
+            Id: 0,
+            TenantId: 0,
+            Color: color,
+            IsActive: true,
+            Descrip: descrip,
+            ProcessTypeId: typeId,
+            TargetPercent: targetPercent,
+            TargetPeriod: targetPeriod,
+            TargetPeriodUnitId: periodUnitId,
+            SlaOwner: owner,
+          },
+          () => {
+            setRefresh(refresh + refresh);
+            trigger(false);
+          }
+        );
       }}
       width={500}
       submitBtnText={"Save"}

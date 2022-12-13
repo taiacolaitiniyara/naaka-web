@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { AddButton } from "../../../../reusables/Buttons";
 import { SpaceHorizontal, Status } from "../../../../reusables/Elements";
-import { ProcessTable } from "../../../../reusables/Tables";
+import { DynamicTable } from "../../../../reusables/Tables";
 import AddProcessRegions from "./AddProcessRegions";
 import EditProcessRegions from "./EditProcessRegions";
 
-function ProcessRegions({ setGroupId, setImpactId, setTypeId, setNameId }) {
+function ProcessRegions({ refresh, setRefresh }) {
   const [addProcessRegions, setAddProcessRegions] = useState(false);
   const [editProcessRegions, setEditProcessRegions] = useState(false);
   const [details, setDetails] = useState({});
@@ -18,14 +18,13 @@ function ProcessRegions({ setGroupId, setImpactId, setTypeId, setNameId }) {
         onClick={() => setAddProcessRegions(true)}
       />
       <SpaceHorizontal height={5} />
-      <ProcessTable
+      <DynamicTable
         tableWidth={100}
         height={150}
         apiRoute={apiRoutes.processRegions}
         rowHover
         seletableRow
-        setValueFromSelectedRow={setGroupId}
-        selectedRowValue={"Id"}
+        injectedParameters={[refresh]}
         columns={[
           { path: "Descrip", name: "Region" },
           { path: "Abbrev", name: "Abbreviation" },
@@ -39,15 +38,21 @@ function ProcessRegions({ setGroupId, setImpactId, setTypeId, setNameId }) {
             setEditDetails: setDetails,
           },
         ]}
-        otherSetterFunctions={() => {
-          setImpactId(0);
-          setTypeId(0);
-          setNameId(0);
-        }}
       />
-      {addProcessRegions && <AddProcessRegions trigger={setAddProcessRegions} />}
+      {addProcessRegions && (
+        <AddProcessRegions
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessRegions}
+        />
+      )}
       {editProcessRegions && (
-        <EditProcessRegions trigger={setEditProcessRegions} details={details} />
+        <EditProcessRegions
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setEditProcessRegions}
+          details={details}
+        />
       )}
     </div>
   );

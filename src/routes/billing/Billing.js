@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import Layout from "../../layout/Layout";
+import { useShadeTabs } from "../../reusables/CustomHooks";
 
 function Billing() {
-  return (
-    <div>Billing</div>
-  )
+  useShadeTabs("billing-tab");
+  return <Layout headerText={"Billing"}>Billing</Layout>;
 }
 
-export default Billing
+export default Billing;

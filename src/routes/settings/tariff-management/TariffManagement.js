@@ -1,30 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { apiGet } from "../../../api-services/ApiCalls";
+import { apiGet, apiPost } from "../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../api-services/ApiRoutes";
 import Layout from "../../../layout/Layout";
 import { AddButton } from "../../../reusables/Buttons";
-import { useShadeTabs } from "../../../reusables/CustomHooks";
+import { useFetchApiList, useShadeTabs } from "../../../reusables/CustomHooks";
 import { Collapsible, SpaceHorizontal } from "../../../reusables/Elements";
+import { refreshOnClose } from "../../../reusables/Functions";
+import { TextInput } from "../../../reusables/Inputs";
+import { DynamicTable } from "../../../reusables/Tables";
+import AddTariffType from "./AddTariffType";
 import TariffRate from "./TariffRate";
 
 function TariffManagement() {
   useShadeTabs("settings-tab");
-  const [list, setList] = useState([]);
-  //console.log(list);
-  useEffect(() => {
-    apiGet(apiRoutes.tariff, setList);
-  }, []);
+  const list = useFetchApiList(apiRoutes.tariff);
+  const [refresh, setRefresh] = useState(1);
+  const [add, showAdd] = useState(false);
+  const [tariffId, setTariffId] = useState(0);
+
   return (
     <Layout headerText={"Tariff Management"}>
-      <AddButton text={"Add Tariff"} />
+      <AddButton text={"Add Tariff Type"} onClick={() => showAdd(true)} />
       <SpaceHorizontal height={10} />
-      {list.map((t, i) => (
-        <Collapsible
-          key={i}
-          title={`${t.TariffType} - ${t.TariffDescription}`}
-          child={<TariffRate id={t.Id} />}
+      <DynamicTable
+        apiRoute={apiRoutes.tariff}
+        tableWidth={100}
+        rowHover
+        seletableRow
+        selectedRowValue={"Id"}
+        setValueFromSelectedRow={setTariffId}
+        height={180}
+        columns={[
+          { path: "TariffType", name: "Type" },
+          { path: "TariffDescription", name: "Description" },
+        ]}
+      />
+      {add && (
+        <AddTariffType
+          trigger={showAdd}
+          refresh={refresh}
+          setRefresh={setRefresh}
         />
-      ))}
+      )}
+      <SpaceHorizontal height={10} />
+      <div>
+        <TariffRate id={tariffId} />
+      </div>
     </Layout>
   );
 }

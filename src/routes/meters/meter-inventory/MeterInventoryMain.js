@@ -21,23 +21,41 @@ function MeterInventoryMain() {
         search
         apiRoute={apiRoutes.getAllMeters}
         columns={[
-          { path: "MtrNoPhy", name: "Meter Num Phy" },
-          { path: "MtrNoBill", name: "Meter Num Bill" },
-          { path: "MtrType", name: "Meter Type", color: "MtrTypeColor" },
-          { path: "MtrPhase", name: "Meter Phase", color: "MtrPhaseColor" },
-          { path: "MtrStatus", name: "Meter Status", color: "MtrStatusColor" },
+          { path: "MtrNum", name: "Meter Number", sort: true },
+          { sort: true, path: "MtrNumBill", name: "Meter Num Bill" },
           {
+            sort: true,
+            path: "MtrType",
+            name: "Meter Type",
+            color: "MtrTypeColor",
+          },
+          {
+            sort: true,
+            path: "MtrPhase",
+            name: "Meter Phase",
+            color: "MtrPhaseColor",
+          },
+          {
+            sort: true,
+            path: "MtrStatus",
+            name: "Meter Status",
+            color: "MtrStatusColor",
+          },
+          {
+            sort: true,
             path: "MtrLocation",
             name: "Meter Location",
             color: "MtrLocationColor",
           },
-          { path: "CustNum", name: "Customer" },
+          { path: "CustNum", name: "Customer", sort: true, },
           {
+            sort: true,
             path: "ConnPosition",
             name: "Meter Position",
             color: "ConnPositionColor",
           },
           {
+            sort: true,
             path: "ConnPwrSource",
             name: "Conn Pwr Source",
             color: "ConnPwrSourceColor",

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { apiGet } from "../api-services/ApiCalls";
 import { filterData, SortColumn, useFetchApiList } from "./CustomHooks";
 import { SpaceHorizontal } from "./Elements";
+import { DateFormatter } from "./Functions";
 import { ConnectionsMap } from "./Maps";
 
 export const DynamicTable = ({
@@ -16,8 +17,9 @@ export const DynamicTable = ({
   injectedParameters,
   search,
   otherSetterFunctions,
+  setDetails,
 }) => {
-  const [seletedRow, setSelectedRow] = useState(0);
+  const [seletedRow, setSelectedRow] = useState();
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
   const [sortState, setSortState] = useState(1);
@@ -25,10 +27,9 @@ export const DynamicTable = ({
   useEffect(
     () => {
       apiGet(apiRoute, setData);
+      console.log("Parameters", injectedParameters);
     },
-    injectedParameters === undefined
-      ? [query, data]
-      : [...injectedParameters, query, data]
+    injectedParameters === undefined ? [query] : [...injectedParameters, query]
   );
   return (
     <div>
@@ -65,7 +66,20 @@ export const DynamicTable = ({
                   }}
                   key={name}
                 >
-                  {edit === true ? "Edit" : name}{" "}
+                  {edit === true ? (
+                    "Edit"
+                  ) : sort === true ? (
+                    <SortColumn
+                      name={name}
+                      list={data}
+                      setNewList={setData}
+                      sortState={sortState}
+                      setSortState={setSortState}
+                      columnName={path}
+                    />
+                  ) : (
+                    name
+                  )}
                 </th>
               ))}
             </tr>
@@ -92,10 +106,22 @@ export const DynamicTable = ({
                       otherSetterFunctions();
                     }
                   }
+
+                  setDetails !== undefined
+                    ? setDetails(rowData)
+                    : console.log("selected");
                 }}
               >
                 {columns.map(
-                  ({ path, color, status, edit, showEdit, setEditDetails }) => (
+                  ({
+                    path,
+                    color,
+                    status,
+                    edit,
+                    showEdit,
+                    setEditDetails,
+                    date,
+                  }) => (
                     <td key={path}>
                       <i
                         className="fa-solid fa-square"
@@ -115,6 +141,8 @@ export const DynamicTable = ({
                         />
                       ) : status ? (
                         status(rowData[path])
+                      ) : date === true ? (
+                        DateFormatter(rowData[path])
                       ) : (
                         rowData[path]
                       )}
@@ -152,7 +180,6 @@ export const ProcessTable = ({
   useEffect(
     () => {
       getData();
-      console.log(data);
     },
     injectedParameters === undefined ? [] : [...injectedParameters]
   );
@@ -272,14 +299,16 @@ export const ConnectionsTable = ({
   search,
 }) => {
   const [seletedRow, setSelectedRow] = useState(0);
-  const data = useFetchApiList(apiRoute);
   const [query, setQuery] = useState("");
+  const [sortState, setSortState] = useState(1);
+  const [data, setData] = useState([]);
 
   useEffect(
-    () => {},
+    () => {
+      apiGet(apiRoute, setData);
+    },
     injectedParameters === undefined ? [query] : [...injectedParameters, query]
   );
-  console.log("List", data);
   return (
     <div>
       <div
@@ -287,6 +316,9 @@ export const ConnectionsTable = ({
           display: search === true ? "block" : "none",
         }}
       >
+        <ConnectionsMap coordsList={filterData(data, query)} height={250} />
+        <SpaceHorizontal height={10} />
+
         <input
           onChange={(v) => setQuery(v.target.value)}
           placeholder={"Search"}
@@ -304,20 +336,32 @@ export const ConnectionsTable = ({
         />
       </div>
       <SpaceHorizontal height={10} />
-      <ConnectionsMap coordsList={filterData(data, query)} height={250} />
-      <SpaceHorizontal height={10} />
+
       <div style={{ height: `${height}px`, overflowY: "scroll" }}>
         <table style={{ width: `${tableWidth}%` }}>
           <tbody>
             <tr style={{ position: "sticky", top: 0 }}>
-              {columns.map(({ name, width, edit }) => (
+              {columns.map(({ name, width, edit, sort, path }) => (
                 <th
                   style={{
                     width: `${width === undefined ? "" : width + "%"}`,
                   }}
                   key={name}
                 >
-                  {edit === true ? "Edit" : name}
+                  {edit === true ? (
+                    "Edit"
+                  ) : sort === true ? (
+                    <SortColumn
+                      name={name}
+                      list={data}
+                      setNewList={setData}
+                      sortState={sortState}
+                      setSortState={setSortState}
+                      columnName={path}
+                    />
+                  ) : (
+                    name
+                  )}
                 </th>
               ))}
             </tr>

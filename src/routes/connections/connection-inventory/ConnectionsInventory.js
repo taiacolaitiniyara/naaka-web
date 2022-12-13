@@ -14,25 +14,39 @@ function ConnectionsInventory() {
         tableWidth={100}
         height={300}
         apiRoute={apiRoutes.getConnDetailsAll}
+        rowHover
+        seletableRow
         columns={[
-          { path: "GpsAddress", name: "GPS Address" },
-          { path: "District", name: "District" },
-          { name: "Pole Fuse", status: Status, path: "PoleFuse" },
+          { path: "GpsAddress", name: "GPS Address", sort: true },
+          { path: "District", name: "District", sort: true },
+          { name: "Pole Fuse", status: Status, path: "PoleFuse", sort: true },
           {
             path: "GridNetworkStatus",
             name: "Grid Status",
             color: "GridNetworkStatusColor",
+            sort: true,
           },
-          { path: "ConnNum", name: "ConnNum" },
-          { path: "ConnStatus", name: "Conn Status", color: "ConnStatusColor" },
+          { path: "ConnNum", name: "ConnNum", sort: true },
+          {
+            path: "ConnStatus",
+            name: "Conn Status",
+            color: "ConnStatusColor",
+            sort: true,
+          },
           {
             status: Status,
             name: "Meters Installed",
             path: "ConnMtrsInstalled",
+            sort: true,
           },
-          { path: "MeterNum", name: "Meter Num" },
-          { status: Status, name: "Initial Reading", path: "IsInitialRead" },
-          { path: "CustNum", name: "Cust Num" },
+          { path: "MeterNum", name: "Meter Num", sort: true },
+          {
+            status: Status,
+            name: "Initial Reading",
+            path: "InitialReadDone",
+            sort: true,
+          },
+          { path: "CustNum", name: "Cust Num", sort: true },
         ]}
       />
     </Layout>

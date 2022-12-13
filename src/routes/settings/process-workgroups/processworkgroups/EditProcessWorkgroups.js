@@ -2,26 +2,30 @@ import React, { useState } from "react";
 import { apiPut } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
+import { refreshOnClose } from "../../../../reusables/Functions";
 import {
   IsActiveInput,
   SelectColor,
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function EditProcessWorkgroups({ trigger, details, refresh }) {
+function EditProcessWorkgroups({ trigger, details, refresh, setRefresh }) {
   const [descrip, setDescrip] = useState(details.Descrip);
   const [color, setColor] = useState(details.Color);
   const [isActive, setIsActive] = useState(details.IsActive);
   function add() {
-    apiPut(apiRoutes.processWorkgroups, {
-      Id: details.Id,
-      TenantId: details.TenantId,
-      Color: color,
-      IsActive: isActive,
-      Descrip: descrip,
-      Abbrev: (descrip.split("")[0] + descrip.split("")[1]).toUpperCase(),
-    });
-    trigger(false);
+    apiPut(
+      apiRoutes.processWorkgroups,
+      {
+        Id: details.Id,
+        TenantId: details.TenantId,
+        Color: color,
+        IsActive: isActive,
+        Descrip: descrip,
+        Abbrev: (descrip.split("")[0] + descrip.split("")[1]).toUpperCase(),
+      },
+      refreshOnClose(setRefresh, refresh, trigger)
+    );
   }
   return trigger ? (
     <PopupForm

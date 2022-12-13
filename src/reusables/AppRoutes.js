@@ -13,9 +13,12 @@ import ManagedLists from "../routes/settings/managed-lists.js/ManagedLists";
 import MeterInventory from "../routes/settings/meter-inventory/MeterInventory";
 import ProcessTemplates from "../routes/settings/process-templates/ProcessTemplates";
 import ProcessWorkgroupManagement from "../routes/settings/process-workgroups/ProcessWorkgroupManagement";
+import SanityChecks from "../routes/settings/sanity-checks/SanityChecks";
 import Settings from "../routes/settings/Settings";
 import TariffManagement from "../routes/settings/tariff-management/TariffManagement";
+import HubsManagement from "../routes/setup/HubsManagement/HubsManagement";
 import PermissionsManagement from "../routes/setup/PermissionsManagement/PermissionsManagement";
+import ProcessZonesManagement from "../routes/setup/ProcessZonesManagement/ProcessZonesManagement";
 import Setup from "../routes/setup/Setup";
 import TenanantManagement from "../routes/setup/TenantManagement/TenanantManagement";
 import Welcome from "../routes/welcome/Welcome";
@@ -27,7 +30,7 @@ export const appRoutes = {
   },
   Login: {
     path: "/login",
-    element: <Login />
+    element: <Login />,
   },
   Customers: {
     path: "/customers",
@@ -63,11 +66,11 @@ export const appRoutes = {
   },
   MeterInventory: {
     path: "/settings/meter-inventory",
-    element: <MeterInventory />
+    element: <MeterInventory />,
   },
   ProcessTemplates: {
     path: "/settings/process-templates",
-    element: <ProcessTemplates />
+    element: <ProcessTemplates />,
   },
   Setup: {
     path: "/setup",
@@ -87,22 +90,34 @@ export const appRoutes = {
   },
   MeterVendors: {
     path: "/meters/metervendors",
-    element: <MeterVendors />
+    element: <MeterVendors />,
   },
   MeterInventoryMain: {
     path: "/meters/meterinventory",
-    element: <MeterInventoryMain />
+    element: <MeterInventoryMain />,
   },
   ProcessWorkgroupsManagement: {
     path: "/settings/processworkgroups",
-    element: <ProcessWorkgroupManagement />
+    element: <ProcessWorkgroupManagement />,
   },
   ConnectionsInventory: {
     path: "/connections/connections-inventory",
-    element: <ConnectionsInventory />
+    element: <ConnectionsInventory />,
   },
   AddConnection: {
-    path: "/connections/add-connection", 
-    element: <AddConnection />
-  }
+    path: "/connections/add-connection",
+    element: <AddConnection />,
+  },
+  ProcessZonesManagement: {
+    path: "/setup/process-zones-management",
+    element: <ProcessZonesManagement />,
+  },
+  HubsManagement: {
+    path: "/setup/hubs-management",
+    element: <HubsManagement />,
+  },
+  SanityChecks: {
+    path: "/settings/sanity-checks",
+    element: <SanityChecks />
+  },
 };

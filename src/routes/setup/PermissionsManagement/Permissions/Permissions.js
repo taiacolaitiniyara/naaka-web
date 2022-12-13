@@ -25,6 +25,8 @@ function Permissions({moduleId}) {
             editAction: () => {
               console.log("Edit Action");
             },
+            path: "Edit",
+            name: "Edit",
           },
         ]}
       />

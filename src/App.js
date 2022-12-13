@@ -96,6 +96,18 @@ function App() {
               path={appRoutes.ConnectionsInventory.path}
               element={appRoutes.ConnectionsInventory.element}
             />
+            <Route
+              path={appRoutes.ProcessZonesManagement.path}
+              element={appRoutes.ProcessZonesManagement.element}
+            />
+            <Route
+              path={appRoutes.HubsManagement.path}
+              element={appRoutes.HubsManagement.element}
+            />
+            <Route
+              path={appRoutes.SanityChecks.path}
+              element={appRoutes.SanityChecks.element}
+            />
           </Routes>
         </Router>
       </Online>

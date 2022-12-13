@@ -6,7 +6,14 @@ import { ProcessTable } from "../../../../reusables/Tables";
 import AddProcessImpacts from "./AddProcessImpacts";
 import EditProcessImpacts from "./EditProcessImpacts";
 
-function ProcessImpacts({ setImpactId, groupId, setTypeId, setNameId }) {
+function ProcessImpacts({
+  setImpactId,
+  groupId,
+  setTypeId,
+  setNameId,
+  refresh,
+  setRefresh,
+}) {
   const [addProcessImpacts, setAddProcessImpacts] = useState(false);
   const [editProcessImpacts, setEditProcessImpacts] = useState(false);
   const [details, setDetails] = useState({});
@@ -25,7 +32,7 @@ function ProcessImpacts({ setImpactId, groupId, setTypeId, setNameId }) {
         rowHover
         seletableRow
         setValueFromSelectedRow={setImpactId}
-        injectedParameters={[groupId]}
+        injectedParameters={[groupId, refresh]}
         selectedRowValue={"Id"}
         otherSetterFunctions={() => {
           setTypeId(0);
@@ -46,10 +53,20 @@ function ProcessImpacts({ setImpactId, groupId, setTypeId, setNameId }) {
         ]}
       />
       {addProcessImpacts && (
-        <AddProcessImpacts trigger={setAddProcessImpacts} groupId={groupId} />
+        <AddProcessImpacts
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessImpacts}
+          groupId={groupId}
+        />
       )}
       {editProcessImpacts && (
-        <EditProcessImpacts trigger={setEditProcessImpacts} details={details} />
+        <EditProcessImpacts
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setEditProcessImpacts}
+          details={details}
+        />
       )}
     </div>
   );

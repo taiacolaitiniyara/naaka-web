@@ -8,19 +8,26 @@ import {
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function EditProcessTypes({ trigger, details }) {
+function EditProcessTypes({ trigger, details, refresh, setRefresh }) {
   const [descrip, setDescrip] = useState(details.Descrip);
   const [color, setColor] = useState(details.Color);
   const [isActive, setIsActive] = useState(details.IsActive);
   function add() {
-    apiPut(apiRoutes.processTypes, {
-      Id: details.Id,
-      TenantId: details.TenantId,
-      Color: color,
-      IsActive: isActive,
-      Descrip: descrip,
-      ProcessImpactId: details.ProcessImpactId,
-    });
+    apiPut(
+      apiRoutes.processTypes,
+      {
+        Id: details.Id,
+        TenantId: details.TenantId,
+        Color: color,
+        IsActive: isActive,
+        Descrip: descrip,
+        ProcessImpactId: details.ProcessImpactId,
+      },
+      () => {
+        setRefresh(refresh + refresh);
+        trigger(false);
+      }
+    );
   }
   return trigger ? (
     <PopupForm

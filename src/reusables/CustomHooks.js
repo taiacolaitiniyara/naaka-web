@@ -13,7 +13,7 @@ export const useFetchApiList = (url) => {
   return list;
 };
 
-export const useShadeTabs = (id ) => {
+export const useShadeTabs = (id) => {
   useEffect(() => {
     sidebarList.map((sb) => {
       if (sb.id === id) {
@@ -70,49 +70,49 @@ export const SortColumn = ({
   list,
   setNewList,
   columnName,
+  name,
 }) => {
-  let newList = list.sort((a, b) => {
-    if (
-      typeof a[columnName] === "number" &&
-      typeof b[columnName] === "number"
-    ) {
-      return sortNumber(a, b);
+  function dataType(data) {
+    if (typeof data === "number") {
+      return "number";
     } else {
-      return sortString();
-    }
-  });
-
-  function sortNumber(a, b) {
-    if (sortState === 1) {
-      return a - b;
-    } else {
-      return b - a;
+      return "string";
     }
   }
 
-  function sortString() {
-    if (sortState === 1) {
-      return 1;
+  function sort(state) {
+    if (dataType(list[0][columnName]) === "number") {
+      if (state === 1) {
+        setNewList([...list].sort((a, b) => a[columnName] - b[columnName]));
+      } else {
+        setNewList([...list].sort((a, b) => b[columnName] - a[columnName]));
+      }
     } else {
-      return -1;
-    }
-  }
-
-  function state(s) {
-    if (s === 1) {
-      setSortState(2);
-    } else {
-      setSortState(1);
+      if (state === 1) {
+        setNewList(
+          [...list].sort((a, b) => (a[columnName] > b[columnName] ? -1 : 1))
+        );
+      } else {
+        setNewList(
+          [...list].sort((a, b) => (a[columnName] > b[columnName] ? 1 : -1))
+        );
+      }
     }
   }
 
   return (
-    <i
-      className={`fa-solid fa-sort-${sortState === 1 ? "up" : "down"}`}
-      onClick={() => {
-        state(sortState);
-        setNewList(newList);
-      }}
-    />
+    <p>
+      {name}
+      <i
+        className={`fa-solid fa-arrow-${
+          sortState === 1 ? "down" : "up"
+        }-wide-short`}
+        onClick={() => {
+          setSortState(sortState === 1 ? 2 : 1);
+          sort(sortState);
+        }}
+        style={{ marginLeft: "5px", cursor: "pointer", color: "#95ff00" }}
+      />
+    </p>
   );
 };

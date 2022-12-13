@@ -12,7 +12,7 @@ import {
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function EditProcessNames({ trigger, details }) {
+function EditProcessNames({ trigger, details, refresh, setRefresh }) {
   const units = useFetchApiList(apiRoutes.processTimeunits);
   const owners = useFetchApiList(apiRoutes.processWorkers);
 
@@ -28,18 +28,25 @@ function EditProcessNames({ trigger, details }) {
     <PopupForm
       trigger={trigger}
       onSubmit={() => {
-        apiPut(apiRoutes.processNames, {
-          Id: details.Id,
-          TenantId: details.TenantId,
-          Color: color,
-          IsActive: isActive,
-          Descrip: descrip,
-          ProcessTypeId: details.ProcessTypeId,
-          TargetPercent: targetPercent,
-          TargetPeriod: targetPeriod,
-          TargetPeriodUnitId: periodUnitId,
-          SlaOwner: owner,
-        });
+        apiPut(
+          apiRoutes.processNames,
+          {
+            Id: details.Id,
+            TenantId: details.TenantId,
+            Color: color,
+            IsActive: isActive,
+            Descrip: descrip,
+            ProcessTypeId: details.ProcessTypeId,
+            TargetPercent: targetPercent,
+            TargetPeriod: targetPeriod,
+            TargetPeriodUnitId: periodUnitId,
+            SlaOwner: owner,
+          },
+          () => {
+            setRefresh(refresh + refresh);
+            trigger(false);
+          }
+        );
       }}
       width={500}
       submitBtnText={"Save"}

@@ -2,26 +2,34 @@ import React, { useState } from "react";
 import { apiPut } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
+import { refreshOnClose } from "../../../../reusables/Functions";
 import {
   IsActiveInput,
   SelectColor,
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function EditProcessRoles({ trigger, details, refresh }) {
+function EditProcessRoles({ trigger, details, refresh, setRefresh }) {
   const [descrip, setDescrip] = useState(details.Descrip);
   const [color, setColor] = useState(details.Color);
   const [isActive, setIsActive] = useState(details.IsActive);
   function add() {
-    apiPut(apiRoutes.processRoles, {
-      Id: details.Id,
-      TenantId: details.TenantId,
-      Color: color,
-      IsActive: isActive,
-      Descrip: descrip,
-      Abbrev: (descrip.split("")[0] + descrip.split("")[1]).toUpperCase(),
-    });
-    trigger(false);
+    apiPut(
+      apiRoutes.processRoles,
+      {
+        Id: details.Id,
+        TenantId: details.TenantId,
+        Color: color,
+        IsActive: isActive,
+        Descrip: descrip,
+        Abbrev: (
+          descrip.split("")[0] +
+          descrip.split("")[1] +
+          descrip.split("")[2]
+        ).toUpperCase(),
+      },
+      refreshOnClose(setRefresh, refresh, trigger)
+    );
   }
   return trigger ? (
     <PopupForm

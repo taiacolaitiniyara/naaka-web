@@ -48,7 +48,7 @@ const settingsList = [
     name: "Managed Lists",
   },
   {
-    to: "/settings/sanitychecks",
+    to: appRoutes.SanityChecks.path,
     name: "Sanity Checks",
   },
   {
@@ -80,11 +80,11 @@ const setupList = [
     name: "Tenant Management",
   },
   {
-    to: "/setup/processzones",
+    to: appRoutes.ProcessZonesManagement.path,
     name: "Process Zones Management",
   },
   {
-    to: "/setup/hubs",
+    to: appRoutes.HubsManagement.path,
     name: "Hubs Management",
   },
   {
@@ -116,6 +116,11 @@ const HubRolesList = (hubId, tenantId) => {
   return list;
 };
 
+const DepotTypes = [
+  { id: 1, name: "Manned" },
+  { id: 2, name: "Unmanned" },
+];
+
 export {
   sidebarList,
   settingsList,
@@ -124,5 +129,6 @@ export {
   HubRolesList,
   appRoutes,
   metersMenuList,
-  connectionsMenuList
+  connectionsMenuList,
+  DepotTypes
 };

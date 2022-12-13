@@ -4,18 +4,25 @@ import { apiPost } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { SelectColor, TextInput } from "../../../../reusables/Inputs";
 
-function AddProcessTypes({ trigger, impactId }) {
+function AddProcessTypes({ trigger, impactId, refresh, setRefresh }) {
   const [descrip, setDescrip] = useState();
   const [color, setColor] = useState();
   function add() {
-    apiPost(apiRoutes.processTypes, {
-      Id: 0,
-      TenantId: 0,
-      Color: color,
-      IsActive: true,
-      Descrip: descrip,
-      ProcessImpactId: impactId,
-    });
+    apiPost(
+      apiRoutes.processTypes,
+      {
+        Id: 0,
+        TenantId: 0,
+        Color: color,
+        IsActive: true,
+        Descrip: descrip,
+        ProcessImpactId: impactId,
+      },
+      () => {
+        setRefresh(refresh + refresh);
+        trigger(false);
+      }
+    );
   }
   return trigger ? (
     <PopupForm

@@ -142,3 +142,35 @@ export const PopupForm = (props) => {
     </div>
   );
 };
+
+export const DataWithLabelDisplay = ({ data, label, dataId }) => {
+  return (
+    <div>
+      <div
+        style={{
+          color: "#777",
+          fontSize: "0.85rem",
+          marginLeft: "5px",
+        }}
+        htmlFor={dataId}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          borderRadius: "5px",
+          backgroundColor: "#eee",
+          padding: "5px",
+          width: "fit-content",
+        }}
+        id={dataId}
+      >
+        {data}
+      </div>
+    </div>
+  );
+};
+
+export const FlexHorizontalContiner = (props) => {
+  return <div style={{ display: "flex" }}>{props.children}</div>;
+};

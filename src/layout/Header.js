@@ -4,7 +4,7 @@ import { apiRoutes } from "../api-services/ApiRoutes";
 import { ProfileImg, SpaceVertical } from "../reusables/Elements";
 
 function Header({ headerText }) {
-  const [tenant, setTenant] = useState({TenantName: "Tenant"});
+  const [tenant, setTenant] = useState({ TenantName: "Tenant" });
   useEffect(() => {
     apiGet(
       apiRoutes.getTenantById +
@@ -13,15 +13,25 @@ function Header({ headerText }) {
     );
   }, []);
   return (
-    <div style={{ display: "flex", position: "fixed", top: "0", width: "100%", zIndex: "2" }}>
+    <div
+      style={{
+        display: "flex",
+        position: "fixed",
+        top: "0",
+        width: "100%",
+        zIndex: "2",
+      }}
+    >
       <div style={{ float: "left", width: "150px" }}></div>
       <header>
         <div>{headerText} </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img
-            src={`data:image/jpeg;base64,${
-              tenant === undefined ? "" : tenant.Logo
-            }`}
+            src={
+              tenant === undefined
+                ? require("../images/fallback_logo.png")
+                : `data:image/jpeg;base64,${tenant.Logo}`
+            }
             alt="Logo"
           />
           {tenant === undefined ? "" : tenant.TenantName}

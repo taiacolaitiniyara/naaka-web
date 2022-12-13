@@ -6,7 +6,7 @@ import { ProcessTable } from "../../../../reusables/Tables";
 import AddProcessNames from "./AddProcessNames";
 import EditProcessNames from "./EditProcessNames";
 
-function ProcessNames({ typeId, setNameId }) {
+function ProcessNames({ typeId, setNameId, refresh, setRefresh }) {
   const [addProcessNames, setAddProcessNames] = useState(false);
   const [editProcessNames, setEditProcessNames] = useState(false);
   const [details, setDetails] = useState({});
@@ -26,7 +26,7 @@ function ProcessNames({ typeId, setNameId }) {
         seletableRow
         setValueFromSelectedRow={setNameId}
         selectedRowValue={"Id"}
-        injectedParameters={[typeId]}
+        injectedParameters={[typeId, refresh]}
         columns={[
           { path: "Descrip", name: "Name" },
           { path: "ProcessType", name: "ProcessType" },
@@ -44,9 +44,21 @@ function ProcessNames({ typeId, setNameId }) {
           },
         ]}
       />
-      {addProcessNames && <AddProcessNames trigger={setAddProcessNames} typeId={typeId} />}
+      {addProcessNames && (
+        <AddProcessNames
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setAddProcessNames}
+          typeId={typeId}
+        />
+      )}
       {editProcessNames && (
-        <EditProcessNames trigger={setEditProcessNames} details={details} />
+        <EditProcessNames
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setEditProcessNames}
+          details={details}
+        />
       )}
     </div>
   );

@@ -6,7 +6,14 @@ import { ProcessTable } from "../../../../reusables/Tables";
 import AddProcessGroups from "./AddProcessGroups";
 import EditProcessGroups from "./EditProcessGroups";
 
-function ProcessGroups({ setGroupId, setImpactId, setTypeId, setNameId }) {
+function ProcessGroups({
+  setGroupId,
+  setImpactId,
+  setTypeId,
+  setNameId,
+  refresh,
+  setRefresh,
+}) {
   const [addProcessGroups, setAddProcessGroups] = useState(false);
   const [editProcessGroups, setEditProcessGroups] = useState(false);
   const [details, setDetails] = useState({});
@@ -20,6 +27,7 @@ function ProcessGroups({ setGroupId, setImpactId, setTypeId, setNameId }) {
       />
       <SpaceHorizontal height={5} />
       <ProcessTable
+        injectedParameters={[refresh]}
         tableWidth={100}
         height={150}
         apiRoute={apiRoutes.processGroups}
@@ -46,11 +54,19 @@ function ProcessGroups({ setGroupId, setImpactId, setTypeId, setNameId }) {
           setNameId(0);
         }}
       />
-      {addProcessGroups && <AddProcessGroups trigger={setAddProcessGroups} />}
+      {addProcessGroups && (
+        <AddProcessGroups
+          setRefresh={setRefresh}
+          refresh={refresh}
+          trigger={setAddProcessGroups}
+        />
+      )}
       {editProcessGroups && (
         <EditProcessGroups
           trigger={setEditProcessGroups}
           details={details}
+          setRefresh={setRefresh}
+          refresh={refresh}
         />
       )}
     </div>
