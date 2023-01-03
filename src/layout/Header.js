@@ -1,40 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { apiGet } from "../api-services/ApiCalls";
-import { apiRoutes } from "../api-services/ApiRoutes";
-import { ProfileImg, SpaceVertical } from "../reusables/Elements";
+import React from "react";
+import { ProfileImg } from "../reusables/Elements";
 
 function Header({ headerText }) {
-  const [tenant, setTenant] = useState({ TenantName: "Tenant" });
-  useEffect(() => {
-    apiGet(
-      apiRoutes.getTenantById +
-        JSON.parse(localStorage.getItem("userInfo")).LoginInfo.TenantId,
-      setTenant
-    );
-  }, []);
   return (
     <div
       style={{
         display: "flex",
-        position: "fixed",
-        top: "0",
         width: "100%",
         zIndex: "2",
+        position: "sticky",
+        top: "0",
       }}
     >
-      <div style={{ float: "left", width: "150px" }}></div>
       <header>
-        <div>{headerText} </div>
+        <div style={{ fontWeight: "700" }}>{headerText} </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <img
-            src={
-              tenant === undefined
-                ? require("../images/fallback_logo.png")
-                : `data:image/jpeg;base64,${tenant.Logo}`
-            }
+            src={`data:image/jpeg;base64,${
+              JSON.parse(localStorage.getItem("tenant")).Logo
+            }`}
             alt="Logo"
           />
-          {tenant === undefined ? "" : tenant.TenantName}
+          {JSON.parse(localStorage.getItem("tenant")).TenantName}
         </div>
         <div style={{ display: "flex", alignItems: "center" }}>
           <ProfileImg />

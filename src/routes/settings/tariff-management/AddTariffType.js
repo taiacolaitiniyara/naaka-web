@@ -16,6 +16,7 @@ function AddTariffType({ trigger, refresh, setRefresh }) {
           apiRoutes.tariff,
           {
             Id: 0,
+            RecId: 0,
             TenantId: 0,
             TariffType: tariffType,
             TariffDescription: description,

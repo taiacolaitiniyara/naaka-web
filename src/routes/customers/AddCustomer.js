@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { apiPost } from "../../api-services/ApiCalls";
 import { apiRoutes } from "../../api-services/ApiRoutes";
-import { SubmitButton } from "../../reusables/Buttons";
+import { CancelButton, SubmitButton } from "../../reusables/Buttons";
+import { AuthToken } from "../../reusables/Constants";
 import { useFetchApiList } from "../../reusables/CustomHooks";
-import { SpaceHorizontal } from "../../reusables/Elements";
+import { SpaceHorizontal, SpaceVertical } from "../../reusables/Elements";
 import {
   DoubleInputs,
   NumberInput,
@@ -12,7 +13,7 @@ import {
 } from "../../reusables/Inputs";
 import { AddAddressMap } from "../../reusables/Maps";
 
-function AddCustomer({ width }) {
+function AddCustomer({ width, setCustomer, trigger }) {
   const districts = useFetchApiList(apiRoutes.getLookUps + 3);
   const pwrProviders = useFetchApiList(apiRoutes.getLookUps + 17);
   const [custName, setCustName] = useState();
@@ -28,7 +29,8 @@ function AddCustomer({ width }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        apiPost(apiRoutes.Customer, {
+
+        const entry = {
           DistrictName: "string",
           CustNumDisp: "string",
           IsEditable: true,
@@ -42,23 +44,26 @@ function AddCustomer({ width }) {
           ActiveMeters: [
             {
               Id: 0,
+              RecId: 0,
               TenantId: 0,
               MtrNum: "string",
               MtrNumBill: 0,
               MtrTypeId: 0,
               MtrType: "string",
+              MtrPhaseId: 0,
               MtrPhase: 0,
               MtrStatusId: 0,
               MtrModelNum: "string",
               MtrSerialNum: "string",
               MtrLocId: 0,
-              InUseDate: "2022-12-12T22:49:35.161Z",
+              InUseDate: "2022-12-30T00:19:32.665Z",
               UploadId: 0,
             },
           ],
           Id: 0,
           TenantId: 0,
-          ParentNo: "string",
+          TrackerId: 0,
+          ParentNnum: "string",
           ParentName: "string",
           PwrProviderId: pwrProviderId,
           PwrProviderRefNum: "CUS" + custNum,
@@ -70,14 +75,33 @@ function AddCustomer({ width }) {
           AddedOn: "2022-12-12T22:49:35.161Z",
           UpdatedOn: "2022-12-12T22:49:35.161Z",
           IsActive: true,
-          IsApproved: 0,
+          IsApproved: true,
           ApprovedBy: "string",
           ApprovedAt: "2022-12-12T22:49:35.161Z",
-        });
+        };
+
+        console.log("Authtoken", AuthToken());
+
+        fetch("http://13.238.73.156:44340/api/v1/Customer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+            Authorization: AuthToken(),
+          },
+          body: JSON.stringify(entry),
+        })
+          .then((r) => r.json())
+          .then((r) => {
+            console.log(r);
+            if (setCustomer != undefined) {
+              setCustomer(r);
+            }
+          })
+          .catch((e) => console.log("Error", e));
       }}
       style={{ width: `${width}%` }}
     >
-      <h3>Customer Info</h3>
       <SpaceHorizontal height={10} />{" "}
       <SelectInput
         list={pwrProviders}
@@ -100,7 +124,7 @@ function AddCustomer({ width }) {
         }
         input1={
           <NumberInput
-            maxValue={"99999"}
+            maxValue={"99999999"}
             minValue={"1"}
             onChange={setCustNum}
             width={100}
@@ -134,13 +158,26 @@ function AddCustomer({ width }) {
       <SpaceHorizontal height={10} />
       <AddAddressMap
         width={100}
-        height={300}
+        height={200}
         setLat={setYLat}
         setLng={setXLng}
         setGpsAddress={setGpsAddress}
       />
       <SpaceHorizontal height={10} />
-      <SubmitButton text={"Submit"} />
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <CancelButton
+          onClick={() => {
+            if (setCustomer !== undefined) {
+              setCustomer({});
+            }
+            if (trigger !== undefined) {
+              trigger(false);
+            }
+          }}
+        />
+        <SpaceVertical width={10} />
+        <SubmitButton text={"Submit"} />
+      </div>
     </form>
   );
 }

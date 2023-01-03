@@ -9,6 +9,8 @@ function MeterVendors() {
   return (
     <Layout headerText={"Meter Vendor"}>
       <DynamicTable
+        rowHover
+        seletableRow
         search
         apiRoute={apiRoutes.getAllMeters}
         height={500}
@@ -27,16 +29,22 @@ function MeterVendors() {
             name: "Meter Phase",
             color: "MtrPhaseColor",
           },
-          {
-            sort: true,
-            path: "MtrStatus",
-            name: "Meter Status",
-            color: "MtrStatusColor",
-          },
-          { sort: true, path: "MtrVendor", name: "Vendor" },
-          { sort: true, path: "MtrManufacturer", name: "Manufacturer" },
           { sort: true, path: "MtrModelNum", name: "Model Num" },
           { sort: true, path: "MtrSerialNum", name: "Serial Number" },
+          { sort: true, path: "MtrVendor", name: "Vendor" },
+          { sort: true, path: "MtrManufacturer", name: "Manufacturer" },
+          {
+            sort: true,
+            path: "WarrantyStatus",
+            name: "Warranty Status",
+            color: "WarrantyStatusColor",
+          },
+          {
+            sort: true,
+            path: "WarrantyExpiry",
+            name: "Warranty Expiry",
+            date: true,
+          },
         ]}
       />
     </Layout>

@@ -23,9 +23,9 @@ function MeterModels() {
         height={150}
         apiRoute={apiRoutes.meterModels}
         columns={[
-          { path: "MtrType", name: "Manufacturer" },
-          { path: "MtrManufacturer", name: "Manufacturer Street" },
-          { path: "MtrModelNum", name: "Manufacturer Suburb" },
+          { path: "MtrType", name: "Mtr Type" },
+          { path: "MtrManufacturer", name: "Manufacturer" },
+          { path: "MtrModelNum", name: "Model" },
           { path: "Color", color: "Color", name: "Color" },
           { path: "IsActive", status: Status, name: "IsActive" },
           {

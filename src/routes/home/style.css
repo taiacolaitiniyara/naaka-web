@@ -1,0 +1,33 @@
+.imp-exp {
+    background-color: #eee;
+    color: #0f0f0f;
+    text-align: center;
+}
+
+.curr {
+    background-color: #eee;
+    text-align: right;
+    width: 16%;
+}
+
+.curr-heading {
+     text-align: right;
+}
+
+.prev-heading {
+     text-align: right;
+}
+
+.prev {
+    background-color: #fff;
+    text-align: right;
+    width: 16%;
+}
+
+#billing-table th {
+    padding: 2.5px;
+}
+
+#billing-table td {
+    padding: 2.5px;
+}

@@ -64,6 +64,18 @@ export const filterData = (data, filter) => {
   );
 };
 
+export const filterDataWithParams = (data, filter, param) => {
+  let list = [];
+  
+  data.map((d) => {
+    if (d[param] === filter) {
+      list.push(d);
+      console.log("Filter with Params", d[param]);
+    }
+  });
+  return list;
+};
+
 export const SortColumn = ({
   sortState,
   setSortState,

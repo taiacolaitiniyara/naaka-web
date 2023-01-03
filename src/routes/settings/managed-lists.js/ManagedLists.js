@@ -11,9 +11,11 @@ import {
 } from "../../../reusables/Elements";
 import { useShadeTabs } from "../../../reusables/CustomHooks";
 import { TextInput } from "../../../reusables/Inputs";
+import { refreshOnClose } from "../../../reusables/Functions";
 
 function ManagedLists() {
   useShadeTabs("settings-tab");
+  const [refresh, setRefresh] = useState(1);
   const [lookupParents, setLookupParents] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   useEffect(() => {
@@ -31,43 +33,53 @@ function ManagedLists() {
           />
         </div>
       ))}
-      {showAdd && <AddManagedList trigger={setShowAdd} />}
+      {showAdd && (
+        <AddManagedList
+          refresh={refresh}
+          setRefresh={setRefresh}
+          trigger={setShowAdd}
+        />
+      )}
     </Layout>
   );
 }
 
-function AddManagedList({ trigger }) {
+function AddManagedList({ trigger, refresh, setRefresh }) {
   const [listName, setListName] = useState();
   function add() {
-    apiPost(apiRoutes.addLookupParent, {
-      HubId: 0,
-      Mapped: true,
-      Order: 1,
-      HasResponses: true,
-      HasHelperText: true,
-      IsRequired: true,
-      Grid: true,
-      EditPermission: true,
-      ChangeMandatory: true,
-      NeedDescriptionBool: true,
-      MultiselectBool: true,
-      IsTimeDependentBool: true,
-      MandatoryBool: true,
-      HasColorBool: true,
-      HasClassificationBool: true,
-      AlphabeticalSortBool: true,
-      Id: 0,
-      TenantId: 0,
-      LookupTypeName: listName,
-      IsActive: true,
-      NeedDescription: 1,
-      Multiselect: 0,
-      IsTimeDependent: 0,
-      Mandatory: 0,
-      HasColor: 1,
-      HasClassification: 0,
-      AlphabeticalSort: 1,
-    });
+    apiPost(
+      apiRoutes.addLookupParent,
+      {
+        HubId: 0,
+        Mapped: true,
+        Order: 1,
+        HasResponses: true,
+        HasHelperText: true,
+        IsRequired: true,
+        Grid: true,
+        EditPermission: true,
+        ChangeMandatory: true,
+        NeedDescriptionBool: true,
+        MultiselectBool: true,
+        IsTimeDependentBool: true,
+        MandatoryBool: true,
+        HasColorBool: true,
+        HasClassificationBool: true,
+        AlphabeticalSortBool: true,
+        Id: 0,
+        TenantId: 0,
+        LookupTypeName: listName,
+        IsActive: true,
+        NeedDescription: true,
+        Multiselect: false,
+        IsTimeDependent: false,
+        Mandatory: false,
+        HasColor: true,
+        HasClassification: false,
+        AlphabeticalSort: true,
+      },
+      refreshOnClose(setRefresh, refresh, trigger)
+    );
   }
   return trigger ? (
     <PopupForm
@@ -78,6 +90,62 @@ function AddManagedList({ trigger }) {
       heading={"Add Managed List"}
     >
       <TextInput placeholder={"List Name"} onChange={setListName} />
+    </PopupForm>
+  ) : (
+    ""
+  );
+}
+
+function EditManagedList({ trigger, refresh, setRefresh, details }) {
+  const [listName, setListName] = useState();
+  function add() {
+    apiPost(
+      apiRoutes.addLookupParent,
+      {
+        HubId: 0,
+        Mapped: true,
+        Order: 1,
+        HasResponses: true,
+        HasHelperText: true,
+        IsRequired: true,
+        Grid: true,
+        EditPermission: true,
+        ChangeMandatory: true,
+        NeedDescriptionBool: true,
+        MultiselectBool: true,
+        IsTimeDependentBool: true,
+        MandatoryBool: true,
+        HasColorBool: true,
+        HasClassificationBool: true,
+        AlphabeticalSortBool: true,
+        Id: details.Id,
+        TenantId: 0,
+        LookupTypeName: listName,
+        IsActive: true,
+        NeedDescription: 1,
+        Multiselect: 0,
+        IsTimeDependent: 0,
+        Mandatory: 0,
+        HasColor: 1,
+        HasClassification: 0,
+        AlphabeticalSort: 1,
+      },
+      refreshOnClose(setRefresh, refresh, trigger)
+    );
+  }
+  return trigger ? (
+    <PopupForm
+      width={400}
+      onSubmit={add}
+      submitBtnText={"Save"}
+      trigger={trigger}
+      heading={"Add Managed List"}
+    >
+      <TextInput
+        value={listName}
+        placeholder={"List Name"}
+        onChange={setListName}
+      />
     </PopupForm>
   ) : (
     ""

@@ -1,63 +1,60 @@
 import React, { useState } from "react";
-import { apiPut } from "../../../../api-services/ApiCalls";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { useFetchApiList } from "../../../../reusables/CustomHooks";
 import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
+import { addToApi, refreshOnClose } from "../../../../reusables/Functions";
 import {
   DoubleInputs,
-  IsActiveInput,
   NumberInput,
   SelectColor,
   SelectInput,
   TextInput,
 } from "../../../../reusables/Inputs";
 
-function EditProcessEventsTemplate({ trigger, details }) {
-  const [descrip, setDescrip] = useState(details.Descrip);
-  const [targetPercent, setTargetPercent] = useState(details.TargetPercent);
-  const [targetPeriod, setTargetPeriod] = useState(details.TargetPeriod);
-  const [unitId, setUnitId] = useState(details.TargetPeriodUnitId);
-  const [owner, setOwner] = useState(details.TargetOwner);
-  const [color, setColor] = useState(details.Color);
-  const [isActive, setIsActive] = useState(details.IsActive);
+function AddProcessEventsTemplate({ trigger, refresh, setRefresh }) {
+  const [descrip, setDescrip] = useState();
+  const [targetPercent, setTargetPercent] = useState();
+  const [targetPeriod, setTargetPeriod] = useState();
+  const [unitId, setUnitId] = useState();
+  const [owner, setOwner] = useState();
+  const [color, setColor] = useState();
 
   const units = useFetchApiList(apiRoutes.processTimeunits);
   const owners = useFetchApiList(apiRoutes.processWorkers);
   return trigger ? (
     <PopupForm
       onSubmit={() => {
-        apiPut(apiRoutes.processEventsReference, {
-          Id: details.Id,
-          TenantId: details.TenantId,
-          Color: color,
-          IsActive: isActive,
-          Descrip: descrip,
-          TargetPercent: targetPercent,
-          TargetPeriod: targetPeriod,
-          TargetPeriodUnitId: unitId,
-          TargetOwner: owner,
-          IsVisible: details.IsVisible,
-        });
+        addToApi(
+          apiRoutes.processEventsReference,
+          {
+            Id: 0,
+            TenantId: 0,
+            Color: color,
+            IsActive: true,
+            Descrip: descrip,
+            TargetPercent: targetPercent,
+            TargetPeriod: targetPeriod,
+            TargetPeriodUnitId: unitId,
+            TargetOwner: owner,
+            IsVisible: 1,
+          },
+          () => refreshOnClose(setRefresh, refresh, trigger)
+        );
       }}
       trigger={trigger}
       width={500}
       submitBtnText={"Save"}
-      heading={"Add Process Event Template"}
+      heading={"Add Process Event Reference"}
     >
-      <TextInput
-        placeholder={"Template Name"}
-        onChange={setDescrip}
-        value={descrip}
-      />
+      <TextInput placeholder={"Template Name"} onChange={setDescrip} />
       <SpaceHorizontal height={10} />
-      <SelectColor set={setColor} value={color} />
+      <SelectColor set={setColor} />
       <SpaceHorizontal height={10} />
       <DoubleInputs
         input1={
           <NumberInput
             placeholder={"Target Period"}
             onChange={setTargetPeriod}
-            value={targetPeriod}
           />
         }
         input2={
@@ -68,7 +65,6 @@ function EditProcessEventsTemplate({ trigger, details }) {
             optionValue={"Id"}
             setValue={setUnitId}
             dataType={"int"}
-            value={unitId}
           />
         }
         width1={50}
@@ -78,23 +74,17 @@ function EditProcessEventsTemplate({ trigger, details }) {
       <NumberInput
         onChange={setTargetPercent}
         placeholder={"Target Percentage [ % ]"}
-        value={targetPercent}
       />
       <SpaceHorizontal height={10} />
       <SelectInput
         list={owners}
         listName={"Process Owner"}
         optionName={"Descrip"}
+        optionName2={"Role"}
+        optionName3={"Workgroup"}
         optionValue={"Id"}
         setValue={setOwner}
         dataType={"int"}
-        value={owner}
-      />
-      <SpaceHorizontal height={10} />
-      <IsActiveInput
-        isActive={isActive}
-        setIsActive={setIsActive}
-        idNumber={11111}
       />
     </PopupForm>
   ) : (
@@ -102,4 +92,4 @@ function EditProcessEventsTemplate({ trigger, details }) {
   );
 }
 
-export default EditProcessEventsTemplate;
+export default AddProcessEventsTemplate;

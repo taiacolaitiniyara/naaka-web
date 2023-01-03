@@ -15,7 +15,12 @@ const sidebarList = [
     icon: "circle-nodes",
     id: "connections-tab",
   },
-  { name: "Changes", to: "/changes", icon: "pen-to-square", id: "changes-tab" },
+  {
+    name: "Changes",
+    to: appRoutes.Changes.path,
+    icon: "pen-to-square",
+    id: "changes-tab",
+  },
   {
     name: "Billing",
     to: appRoutes.Billing.path,
@@ -95,11 +100,23 @@ const setupList = [
     to: appRoutes.PermissionsManagement.path,
     name: "Permissions Management",
   },
+  {
+    to: appRoutes.PhaseManagement.path,
+    name: "Phase Management"
+  }
+];
+
+const billingMenuList = [
+  {
+    to: appRoutes.BillRunManagement.path,
+    name: "Bill Run Management",
+  },
 ];
 
 const connectionsMenuList = [
   { to: appRoutes.AddConnection.path, name: "Add Connection" },
   { to: appRoutes.ConnectionsInventory.path, name: "Connections Inventory" },
+  { to: appRoutes.ReadingRoutes.path, name: "Reading Routes" },
 ];
 
 const TenantTypeList = [
@@ -130,5 +147,6 @@ export {
   appRoutes,
   metersMenuList,
   connectionsMenuList,
-  DepotTypes
+  DepotTypes,
+  billingMenuList
 };

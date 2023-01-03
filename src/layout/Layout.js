@@ -7,9 +7,11 @@ import "./style.css";
 function Layout(props) {
   return (
     <div className="layout">
-      <Header headerText={props.headerText} />
       <Sidebar />
-      <div className="main-body">{props.children}</div>
+      <div className="main-body">
+        <Header headerText={props.headerText} />
+        <div style={{padding: "10px"}}>{props.children}</div>
+      </div>
     </div>
   );
 }

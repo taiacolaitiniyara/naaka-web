@@ -13,7 +13,6 @@ import TariffRate from "./TariffRate";
 
 function TariffManagement() {
   useShadeTabs("settings-tab");
-  const list = useFetchApiList(apiRoutes.tariff);
   const [refresh, setRefresh] = useState(1);
   const [add, showAdd] = useState(false);
   const [tariffId, setTariffId] = useState(0);
@@ -29,10 +28,11 @@ function TariffManagement() {
         seletableRow
         selectedRowValue={"Id"}
         setValueFromSelectedRow={setTariffId}
+        injectedParameters={[refresh]}
         height={180}
         columns={[
-          { path: "TariffType", name: "Type" },
-          { path: "TariffDescription", name: "Description" },
+          { path: "TariffType", name: "Type", sort: true },
+          { path: "TariffDescription", name: "Description", sort: true },
         ]}
       />
       {add && (

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { apiRoutes } from "../../../../api-services/ApiRoutes";
 import { useFetchApiList } from "../../../../reusables/CustomHooks";
 import { PopupForm, SpaceHorizontal } from "../../../../reusables/Elements";
-import { addToApi } from "../../../../reusables/Functions";
 import {
   DoubleInputs,
   NumberInput,
@@ -10,6 +9,7 @@ import {
   SelectInput,
   TextInput,
 } from "../../../../reusables/Inputs";
+import { apiPost } from "../../../../api-services/ApiCalls";
 
 function AddProcessNames({ trigger, typeId, refresh, setRefresh }) {
   const units = useFetchApiList(apiRoutes.processTimeunits);
@@ -25,8 +25,21 @@ function AddProcessNames({ trigger, typeId, refresh, setRefresh }) {
     <PopupForm
       trigger={trigger}
       onSubmit={() => {
-        addToApi(
-          apiRoutes.processNames,
+        console.log({
+          Id: 0,
+          TenantId: 0,
+          Color: color,
+          IsActive: true,
+          Descrip: descrip,
+          ProcessTypeId: typeId,
+          TargetPercent: targetPercent,
+          TargetPeriod: targetPeriod,
+          TargetPeriodUnitId: periodUnitId,
+          SlaOwner: owner,
+        });
+
+        apiPost(
+          apiRoutes.processes,
           {
             Id: 0,
             TenantId: 0,

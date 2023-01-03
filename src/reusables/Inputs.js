@@ -187,6 +187,8 @@ export const SelectInput = ({
   listName,
   optionValue,
   optionName,
+  optionName2,
+  optionName3,
   dataType,
   setValue,
   value,
@@ -205,7 +207,9 @@ export const SelectInput = ({
       <option>{`Select ${listName}`}</option>
       {list.map((l, i) => (
         <option key={i} value={l[optionValue]}>
-          {l[optionName]}
+          {`${l[optionName]}${
+            optionName2 != undefined ? ", " + l[optionName2] : ""
+          } ${optionName3 != undefined ? " - " + l[optionName3] : ""}`}
         </option>
       ))}
     </select>
@@ -227,16 +231,38 @@ export const SelectMultipleInput = ({
     setCheckedStates(new Array(list.length).fill(false));
   }, []);
 
-  console.log("Check", checkedStates, "List", newList);
+  //console.log("NewList", newList);
 
-  function handleChecked(position, row) {
+  function spliceList(list, row, opVal) {
+    let y = [];
+    if (opVal !== undefined) {
+      list.map((m) => {
+        if (m !== row[opVal]) {
+          y.push(m);
+        }
+      });
+    } else {
+      list.map((m) => {
+        if (m !== row) {
+          y.push(m);
+        }
+      });
+    }
+    return y;
+  }
+
+  function handleChecked(position, row, check) {
     const updatedCheckedState = checkedStates.map((item, index) =>
       index === position ? !item : item
     );
 
     setCheckedStates(updatedCheckedState);
-    if (optionValue != undefined) {
-      setNewList([...newList, row[optionValue]]);
+    if (optionValue !== undefined) {
+      if (check === true) {
+        setNewList([...newList, row[optionValue]]);
+      } else {
+        setNewList(spliceList(newList, row, optionValue));
+      }
     } else {
       setNewList([...newList, row]);
     }
@@ -263,11 +289,23 @@ export const SelectMultipleInput = ({
           marginTop: "5px",
           borderRadius: "5px",
           width: "100%",
+          height: "200px",
+          overflowY: "scroll",
           boxShadow: "0 0 10px rgba(0, 0, 0, 0.25)",
           padding: "0 15px",
         }}
       >
-        <div style={{ textAlign: "right", padding: "15px", cursor: "pointer" }}>
+        <div
+          style={{
+            textAlign: "right",
+            padding: "15px",
+            cursor: "pointer",
+            top: "0",
+            position: "sticky",
+            backgroundColor: "#ffffff",
+            zIndex: "1",
+          }}
+        >
           <i
             className="fa-solid fa-times"
             onClick={() => setShowOptions(false)}
@@ -276,7 +314,7 @@ export const SelectMultipleInput = ({
         {list.map((l, index) => (
           <div key={index} className={"select-multiple-option"}>
             <input
-              onChange={() => handleChecked(index, l)}
+              onChange={(v) => handleChecked(index, l, v.target.checked)}
               checked={checkedStates[index]}
               id={l.Id}
               type={"checkbox"}
@@ -405,7 +443,7 @@ export const IsActiveInput = ({ isActive, idNumber, setIsActive }) => {
         className={`fa-solid fa-square${isActive === false ? "" : "-check"}`}
         onClick={() => setIsActive(!isActive)}
         style={{
-          color: isActive == true ? "#86b300" : "#444",
+          color: isActive === true ? "#86b300" : "#444",
           marginLeft: "10px",
           fontSize: "1rem",
           cursor: "pointer",

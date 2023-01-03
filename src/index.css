@@ -133,7 +133,7 @@ th {
   background-color: #444;
   color: #fff;
   text-align: left;
-  padding: 5px;
+  padding: 8px 5px;
   border: 1px solid #ccc;
 }
 
@@ -151,7 +151,6 @@ td {
   justify-content: space-between;
   align-items: center;
   font-weight: 700;
-  border: 1px solid #ddd;
 }
 
 .click-list-item:hover {

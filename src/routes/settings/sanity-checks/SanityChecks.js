@@ -17,7 +17,7 @@ function SanityChecks() {
           { path: "MaxString", name: "Max", sort: true },
           {
             path: "RequireReReading",
-            name: "Require Re-Reading",
+            name: "Require Checking",
             status: Status,
             sort: true,
           },

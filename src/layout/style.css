@@ -28,7 +28,7 @@ header img {
   left: 0;
   background-color: #222;
   height: 100%;
-  width: 150px;
+  width: 160px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -63,10 +63,8 @@ nav img {
 }
 
 .main-body {
-  margin-left: 150px;
-  margin-top: 45px;
+  margin-left: 160px;
   margin-bottom: 60px;
-  padding: 10px;
 }
 
 .layout {

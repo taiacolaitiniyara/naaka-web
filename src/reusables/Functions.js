@@ -40,11 +40,56 @@ export function refreshOnClose(setRefresh, refresh, trigger) {
   trigger(false);
 }
 
+function month(m) {
+  let newMonth = "";
+  switch (m) {
+    case "12":
+      newMonth = "Dec";
+      break;
+    case "11":
+      newMonth = "Nov";
+      break;
+    case "10":
+      newMonth = "Oct";
+      break;
+    case "09":
+      newMonth = "Sep";
+      break;
+    case "08":
+      newMonth = "Aug";
+      break;
+    case "07":
+      newMonth = "Jul";
+      break;
+    case "06":
+      newMonth = "Jun";
+      break;
+    case "05":
+      newMonth = "May";
+      break;
+    case "04":
+      newMonth = "Apr";
+      break;
+    case "03":
+      newMonth = "Mar";
+      break;
+    case "02":
+      newMonth = "Feb";
+      break;
+    case "01":
+      newMonth = "Jan";
+      break;
+    default:
+      break;
+  }
+  return newMonth;
+}
+
 export function DateFormatter(date) {
   if (date != null || date === undefined) {
     const splitDateAndTime = date.split("T");
     const splitDate = splitDateAndTime[0].split("-");
-    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`;
+    return `${splitDate[2]} ${month(splitDate[1])} ${splitDate[0]}`;
   } else {
     return date;
   }

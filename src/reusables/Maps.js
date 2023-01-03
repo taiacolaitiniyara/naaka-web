@@ -29,7 +29,7 @@ export const AddAddressMap = (props) => {
   if (!isLoaded) return <div>Loading...</div>;
   return (
     <GoogleMap
-      zoom={15}
+      zoom={12.5}
       center={{ lat: lat, lng: lng }}
       mapContainerClassName="map"
       apiKey={props.apiKey}

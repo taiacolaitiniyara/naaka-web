@@ -14,6 +14,7 @@ function AddProcessRegions({ trigger, refresh, setRefresh }) {
       apiRoutes.processRegions,
       {
         Id: 0,
+        RecId: 0,
         TenantId: 0,
         Color: color,
         IsActive: true,

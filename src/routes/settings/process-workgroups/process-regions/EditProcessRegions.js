@@ -18,6 +18,7 @@ function EditProcessRegions({ trigger, details, refresh, setRefresh }) {
       apiRoutes.processRegions,
       {
         Id: details.Id,
+        RecId: 0,
         TenantId: details.TenantId,
         Color: color,
         IsActive: isActive,

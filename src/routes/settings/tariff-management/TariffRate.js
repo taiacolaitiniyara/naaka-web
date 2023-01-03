@@ -7,47 +7,79 @@ import {
   Status,
 } from "../../../reusables/Elements";
 import { AddButton } from "../../../reusables/Buttons";
-import {
-  DateTimeInput,
-  DecimalInput,
-  NumberInput,
-} from "../../../reusables/Inputs";
+import { DateTimeInput, DecimalInput } from "../../../reusables/Inputs";
 import { apiPost } from "../../../api-services/ApiCalls";
-import { refreshOnClose } from "../../../reusables/Functions";
+import { DateFormatter, refreshOnClose } from "../../../reusables/Functions";
+import { useFetchApiList } from "../../../reusables/CustomHooks";
 
 function TariffRate({ id }) {
   const [refresh, setRefresh] = useState(1);
   const [showAdd, setShowAdd] = useState(false);
+  const rates = useFetchApiList(apiRoutes.tariffRate + id);
   return (
     <div>
       <AddButton text={"Add Rate"} onClick={() => setShowAdd(true)} />
       <SpaceHorizontal height={10} />
-      <DynamicTable
-        height={180}
-        injectedParameters={[refresh, id]}
-        tableWidth={100}
-        apiRoute={apiRoutes.tariffRate + id}
-        columns={[
-          { path: "IsActive", name: "IsActive", status: Status, sort: true },
-          { path: "ImpRate", name: "Import Rate", sort: true },
-          { path: "ExpRate", name: "Export Rate", sort: true },
-          { path: "PrdRate", name: "Production Rate", sort: true },
-          {
-            path: "ActivateDate",
-            name: "Activate Date",
-            sort: true,
-            date: true,
-          },
-          {
-            path: "DeactivateDate",
-            name: "Deactivate Date",
-            sort: true,
-            date: true,
-          },
-          { path: "AddedBy", name: "Added By", sort: true },
-          { path: "ApprovedBy", name: "Approved By", sort: true },
-        ]}
-      />
+      <div style={{ height: "300px", overflowY: "scroll" }}>
+        <table style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th rowSpan={2}>IsActive</th>
+              <th colSpan={5}>IMPORT</th>
+              <th colSpan={5}>EXPORT</th>
+              <th colSpan={5}>PRODUCTION</th>
+              <th rowSpan={2}>Activate Date</th>
+              <th rowSpan={2}>Deactivate Date</th>
+              <th rowSpan={2}>Added By</th>
+              <th rowSpan={2}>Approved By</th>
+            </tr>
+            <tr>
+              <th>Bill Type</th>
+              <th>Tier</th>
+              <th>Name</th>
+              <th>{"Limit (kW)"}</th>
+              <th>{"Rate ($)"}</th>
+              <th>Bill Type</th>
+              <th>Tier</th>
+              <th>Name</th>
+              <th>{"Limit (kW)"}</th>
+              <th>{"Rate ($)"}</th>
+              <th>Bill Type</th>
+              <th>Tier</th>
+              <th>Name</th>
+              <th>{"Limit (kW)"}</th>
+              <th>{"Rate ($)"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rates.map((r, i) => (
+              <tr key={i}>
+                <td>{Status(r.IsActive)}</td>
+                <td>{r.ImpBillType}</td>
+                <td>{r.ImpTier}</td>
+                <td>{r.ImpName}</td>
+                <td>{r.ImpLimit}</td>
+                <td>{r.ImpRate}</td>
+                <td>{r.ExpBillType}</td>
+                <td>{r.ExpTier}</td>
+                <td>{r.ExpName}</td>
+                <td>{r.ExpLimit}</td>
+                <td>{r.ExpRate}</td>
+                <td>{r.PrdBillType}</td>
+                <td>{r.PrdTier}</td>
+                <td>{r.PrdName}</td>
+                <td>{r.PrdLimit}</td>
+                <td>{r.PrdRate}</td>
+                <td>{DateFormatter(r.ActivateDate)}</td>
+                <td>{DateFormatter(r.DeactivateDate)}</td>
+                <td>{r.AddedBy}</td>
+                <td>{r.ApprovedBy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <SpaceHorizontal height={10} />
       {showAdd && (
         <AddTariffRate

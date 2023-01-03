@@ -1,11 +1,10 @@
 import { Offline, Online } from "react-detect-offline";
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { appRoutes } from "./reusables/Lists";
 import OfflinePopup from "./routes/offline/OfflinePopup";
 
 function App() {
-  //console.log(JSON.parse(localStorage.getItem("userInfo")));
+  //console.log(JSON.parse(localStorage.getItem("tenant")));
 
   return (
     <div className="App">
@@ -107,6 +106,18 @@ function App() {
             <Route
               path={appRoutes.SanityChecks.path}
               element={appRoutes.SanityChecks.element}
+            />
+            <Route
+              path={appRoutes.ReadingRoutes.path}
+              element={appRoutes.ReadingRoutes.element}
+            />
+            <Route
+              path={appRoutes.PhaseManagement.path}
+              element={appRoutes.PhaseManagement.element}
+            />
+            <Route
+              path={appRoutes.BillRunManagement.path}
+              element={appRoutes.BillRunManagement.element}
             />
           </Routes>
         </Router>

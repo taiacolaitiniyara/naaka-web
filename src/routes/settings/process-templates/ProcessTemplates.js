@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../../layout/Layout";
 import { useShadeTabs } from "../../../reusables/CustomHooks";
 import { SpaceHorizontal } from "../../../reusables/Elements";
-import ProcessEventsTemplate from "./process-events-template/ProcessEventsTemplate";
+import ProcessEventsTemplate from "./process-events-ref/ProcessEventsTemplate";
 import ProcessEvents from "./process-events/ProcessEvents";
 import ProcessGroups from "./process-groups/ProcessGroups";
 import ProcessImpacts from "./process-impacts/ProcessImpacts";
@@ -15,7 +15,7 @@ function ProcessTemplates() {
   const [groupId, setGroupId] = useState(0);
   const [impactId, setImpactId] = useState(0);
   const [typeId, setTypeId] = useState(0);
-  const [nameId, setNameId] = useState(0);
+  const [nameId, setNameId] = useState(1);
   return (
     <Layout headerText="Process Templates">
       <ProcessGroups

@@ -80,7 +80,6 @@ export const Collapsible = ({ title, child }) => {
       <div
         style={{
           backgroundColor: showChild === true ? "#ccc" : "#eee",
-          border: showChild === true ? "1px solid #bbb" : "1px solid #ddd",
         }}
         className="click-list-item"
         onClick={() => setShowChild(!showChild)}
@@ -143,6 +142,53 @@ export const PopupForm = (props) => {
   );
 };
 
+export const PopupFormContainer = (props) => {
+  return (
+    <div className="popup-form-container">
+      <div
+        className="popup-form"
+        style={{ width: props.width }}
+      >
+        <div className="popup-form-header">
+          <h3>{props.heading}</h3>
+          <i
+            className="fa-solid fa-times"
+            style={{ fontSize: "1.2rem", cursor: "pointer" }}
+            onClick={() => props.trigger(false)}
+          />
+        </div>
+        <div
+          style={{ maxHeight: "500px", overflowY: "scroll", padding: "5px" }}
+        >
+          {props.children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const PopupDetails = (props) => {
+  return (
+    <div className="popup-form-container">
+      <div className="popup-form" style={{ width: props.width }}>
+        <div className="popup-form-header">
+          <h3>{props.heading}</h3>
+          <i
+            className="fa-solid fa-times"
+            style={{ fontSize: "1.2rem", cursor: "pointer" }}
+            onClick={() => props.trigger(false)}
+          />
+        </div>
+        <div
+          style={{ maxHeight: "500px", overflowY: "scroll", padding: "5px" }}
+        >
+          {props.children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const DataWithLabelDisplay = ({ data, label, dataId }) => {
   return (
     <div>
@@ -150,7 +196,6 @@ export const DataWithLabelDisplay = ({ data, label, dataId }) => {
         style={{
           color: "#777",
           fontSize: "0.85rem",
-          marginLeft: "5px",
         }}
         htmlFor={dataId}
       >
@@ -158,7 +203,7 @@ export const DataWithLabelDisplay = ({ data, label, dataId }) => {
       </div>
       <div
         style={{
-          borderRadius: "5px",
+          borderRadius: "2.5px",
           backgroundColor: "#eee",
           padding: "5px",
           width: "fit-content",

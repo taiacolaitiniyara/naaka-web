@@ -29,7 +29,7 @@ function ProcessDepots({ refresh, setRefresh }) {
           { path: "Descrip", name: "Depot" },
           { path: "Abbrev", name: "Abbreviation" },
           { path: "DepotType", name: "Depot Type" },
-          { path: "GpsAddress", name: "Address" },
+          { path: "GpsAddress", name: "GPS Address" },
           { path: "Region", name: "Region" },
           { path: "Color", color: "Color", name: "Color" },
           { path: "IsActive", status: Status, name: "IsActive" },

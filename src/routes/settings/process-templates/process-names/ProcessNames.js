@@ -14,26 +14,26 @@ function ProcessNames({ typeId, setNameId, refresh, setRefresh }) {
   return (
     <div>
       <AddButton
-        text={"Add Process Name"}
+        text={"Add Process"}
         onClick={() => setAddProcessNames(true)}
       />
       <SpaceHorizontal height={5} />
       <ProcessTable
         tableWidth={100}
         height={150}
-        apiRoute={apiRoutes.processNamesByTypeId + typeId}
+        apiRoute={apiRoutes.processesByTypeId + typeId}
         rowHover
         seletableRow
         setValueFromSelectedRow={setNameId}
         selectedRowValue={"Id"}
         injectedParameters={[typeId, refresh]}
         columns={[
-          { path: "Descrip", name: "Name" },
+          {path: "ProcessNumber", name: "Process Num"},
+          { path: "Descrip", name: "Process", color: "Color" },
           { path: "ProcessType", name: "ProcessType" },
           { path: "TargetPeriod", name: "Target Period" },
           { path: "TargetPeriodUnit", name: "Unit" },
           { path: "TargetPercent", name: "Target (%)" },
-          { path: "Color", color: "Color", name: "Color" },
           { path: "IsActive", status: Status, name: "IsActive" },
           {
             path: "Edit",

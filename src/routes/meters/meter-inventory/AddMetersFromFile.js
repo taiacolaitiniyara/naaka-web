@@ -107,12 +107,6 @@ function AddMetersFromFile({ trigger }) {
       <SpaceHorizontal height={10} />
       <DoubleInputs
         input1={
-          <NumberInput
-            placeholder={"Warranty Months"}
-            onChange={setWarrantyMonths}
-          />
-        }
-        input2={
           <SelectInput
             setValue={setWarrantyStartEvent}
             list={warrantyStartEvents}
@@ -122,8 +116,14 @@ function AddMetersFromFile({ trigger }) {
             dataType={"int"}
           />
         }
-        label1={"Warranty Months"}
-        label2={"Warranty Start Event"}
+        input2={
+          <NumberInput
+            placeholder={"Warranty Months"}
+            onChange={setWarrantyMonths}
+          />
+        }
+        label2={"Warranty Months"}
+        label1={"Warranty Start Event"}
         width1={50}
         width2={50}
       />

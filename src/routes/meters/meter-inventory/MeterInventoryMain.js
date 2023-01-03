@@ -19,6 +19,8 @@ function MeterInventoryMain() {
       <SpaceHorizontal height={10} />
       <DynamicTable
         search
+        rowHover
+        seletableRow
         apiRoute={apiRoutes.getAllMeters}
         columns={[
           { path: "MtrNum", name: "Meter Number", sort: true },

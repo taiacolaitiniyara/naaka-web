@@ -134,7 +134,7 @@ function ManagedListTable({ title, type }) {
   const [edit, showEdit] = useState(false);
   const [details, setDetails] = useState({});
   const [refresh, setRefresh] = useState(1);
-  console.log("Refresh", refresh);
+  //console.log("Refresh", refresh);
   return (
     <div>
       <AddButton

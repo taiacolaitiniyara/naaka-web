@@ -33,8 +33,8 @@ function Sidebar() {
             );
 
             localStorage.setItem(
-              "tenantInfo",
-              JSON.stringify({ TenantName: "Tenant", TenantId: 1 })
+              "tenant",
+              JSON.stringify({ TenantName: "Tenant", TenantId: 0 })
             );
 
             window.location.href = appRoutes.Login.path;

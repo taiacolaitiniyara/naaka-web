@@ -3,19 +3,21 @@ import { apiRoutes } from "../../api-services/ApiRoutes";
 import Layout from "../../layout/Layout";
 import { AddButton } from "../../reusables/Buttons";
 import { useShadeTabs } from "../../reusables/CustomHooks";
-import { SpaceHorizontal } from "../../reusables/Elements";
+import { PopupFormContainer, SpaceHorizontal } from "../../reusables/Elements";
 import { DynamicTable } from "../../reusables/Tables";
 import CustomerInfo from "./CustomerInfo";
 import EditCustomer from "./EditCustomer";
+import AddCustomer from "./AddCustomer";
 
 function Customers() {
   useShadeTabs("customers-tab");
   const [refresh, setRefresh] = useState(1);
   const [showEdit, setShowEdit] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const [details, setDetails] = useState({});
   return (
     <Layout headerText={"Customers"}>
-      <AddButton text={"Add Customer"} onClick={() => alert("Add")} />
+      <AddButton text={"Add Customer"} onClick={() => setShowAdd(true)} />
       <SpaceHorizontal height={10} />
       <DynamicTable
         apiRoute={apiRoutes.Customer}
@@ -50,6 +52,13 @@ function Customers() {
           details={details}
         />
       )}
+
+      {showAdd && (
+        <PopupFormContainer heading={"Add Customer"} width={500} trigger={setShowAdd}>
+          <AddCustomer trigger={setShowAdd} />
+        </PopupFormContainer>
+      )}
+
       <SpaceHorizontal height={10} />
       <CustomerInfo details={details} />
     </Layout>
